@@ -1,0 +1,120 @@
+.newSalesFormContainerFluid {
+
+    .formHeader {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 22px;
+        margin-bottom: 16px;
+
+        h2 {
+            font-weight: 100;
+            margin: 0;
+        }
+
+        .cleanBtn {
+            border: none;
+            background: none;
+            fill: var(--beauty-bleu);
+            cursor: pointer;
+            outline-color: var(--light-main-color)
+        }
+    }
+
+    .newSalesFormConteiner {
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: center;
+
+            .addNewSalesRow {
+                width: fit-content;
+                box-shadow: 0 2px 10px -3px #0000006b;
+                margin: 12px;
+                padding: 12px;
+                border-radius: 6px;
+                max-height: 410px;
+                // overflow-x: hidden;
+
+                .rowHeader {
+                    height: 36px;
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 4px 0;
+                    border-radius: 4px;
+                    align-items: center;
+                    padding-left: 6px;
+                    background: var(--input-border-color);
+                    font-size: 16px;
+                    letter-spacing: 1px;
+                    box-shadow: var(--small-shadow);
+
+                    .deleteRow {
+                        border: none;
+                        background: none;
+                        fill: var(--hovered-color);
+                        cursor: pointer;
+                        outline-color: var(--light-main-color);
+                    }
+                }
+            }
+
+            .addProductFieldBtn {
+                width: 40px;
+                position: absolute;
+                margin-bottom: -57px;
+                height: 40px;
+                border-radius: 50%;
+                border: none;
+                fill: var(--white-color);
+                background: var(--primary-blue-color);
+                cursor: pointer;
+                outline-color: var(--light-main-color);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        .submitAllReccorded {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 80px;
+            margin-bottom: 38px;
+
+            button {
+                width: 140px;
+            }
+        }
+    }
+}
+
+.productInstockToChoose {
+    p {
+        margin: 0;
+        margin-top: -13px;
+        font-size: 11px;
+        letter-spacing: 1px;
+        margin-left: 6px;
+        text-align: left;
+        margin-bottom: 11px;
+        font-weight: 100;
+    }
+
+    .radiosRow {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 8px;
+
+        label {
+            font-size: 13px;
+            font-weight: 100;
+            letter-spacing: 1px;
+        }
+    }
+}

@@ -1,0 +1,85 @@
+.yearSelector {
+    width: 185px;
+    margin-top: 30px;
+    margin-left: 10px;
+
+    ul {
+        width: 185px;
+        margin-left: 10px;
+    }
+}
+
+.operatingAccountTableContainer {
+    .row {
+        display: flex;
+        justify-content: center;
+
+        table {
+            box-shadow: var(--small-shadow);
+            border-radius: 10px;
+            padding: 20px;
+            width: calc(100% - 39px);
+            border-collapse: collapse;
+
+            .creditRowTitle{
+                height: 0;
+            }
+        }
+
+        thead {
+            text-align: left;
+
+            tr {
+                font-size: 13px;
+                text-transform: capitalize;
+                letter-spacing: 1px;
+                height: 60px;
+            }
+        }
+
+        tr {
+            height: 52px;
+            border-collapse: collapse;
+
+            td,
+            th {
+                border-bottom: 2px solid #e0e0e0;
+                padding-left: 20px;
+                font-size: 15px;
+                text-transform: capitalize;
+                letter-spacing: 2px;
+            }
+
+            .catFirtRow {
+                border-left: 3px solid #e0e0e0;
+            }
+        }
+
+        .makeBorder{
+            font-weight: bold;
+        }
+
+        .spanedRow {
+
+            td {
+                position: relative;
+
+                span {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+
+                .expensesTitle {
+                    position: absolute;
+                    top: 0;
+                    font-size: 15px;
+                    font-weight: 100;
+                }
+            }
+
+        }
+
+
+
+    }
+}

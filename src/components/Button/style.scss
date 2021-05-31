@@ -1,0 +1,32 @@
+.overallButton {
+    min-width: 86px;
+    min-height: 40px;
+    font-size: 18px;
+    border: none;
+    color: var(--white-color);
+    background: var(--primary-blue-color);
+    border-radius: 3px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    outline-color: var(--light-main-color);
+    transition: .3s ease;
+}
+
+.overallButton:hover {
+    background: var(--weak-black-color);
+    transition: .3s ease;
+}
+
+.overallButton:active {
+    background: var(--hovered-color);
+}
+
+.overallButton:hover:disabled {
+    background: var(--ligth-white-color);
+}
+
+.overallButton:disabled {
+    background: var(--ligth-white-color);
+    cursor: not-allowed;
+    transition: .3s ease;
+}

@@ -1,0 +1,210 @@
+.tableContainer {
+
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    padding: 0 9px 0 9px;
+    color: #455972;
+    border-collapse: collapse;
+
+
+}
+
+.aliasPointer {
+    cursor: initial !important;
+}
+
+.tableTitle h2 {
+    letter-spacing: 1px;
+    position: absolute;
+    display: inline-block;
+    font-size: 23px;
+    top: 14px;
+    font-weight: 100;
+    left: 21px;
+    margin: 0;
+}
+
+.tableContainer tr th {
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.tableContainer tr {
+    height: 54px;
+    border-bottom: 1.5px solid #9695931f;
+    font-weight: 400;
+    color: var(--table-row-color);
+}
+
+.tableContainer tr:hover {
+    transition: .5s ease;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.tableSection tr .rowCaptalize {
+    text-transform: capitalize;
+}
+
+.tdCheckbox {
+    width: 40px;
+}
+
+.tableSection {
+    transform: translateY(93px);
+    padding: 0 10px;
+    margin: 0 0 117px 0;
+    margin: 0 20px 117px 20px;
+    box-shadow: var(--small-shadow);
+    background-color: var(--main-white);
+    border-radius: 6px;
+    padding-top: 9px;
+    min-height: calc(100vh - 193px);
+    overflow: auto;
+
+    .tableHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 45px;
+        margin-bottom: 15px;
+
+        .rightSide {
+            position: relative;
+
+            button {
+                border: none;
+                background: none;
+                fill: var(--light-main-color);
+                padding: 5px;
+                outline-color: var(--outline-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+        }
+
+        .leftSide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            fill: var(--ligth-white-color);
+            background: var(--input-border-color);
+            padding: 4px;
+            border-radius: 6px;
+
+            .searchInput {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            label {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 4px;
+            }
+
+            input {
+                border: none;
+                background: var(--soft-white);
+                height: 34px;
+                width: 288px;
+                outline-color: #ebecec;
+                font-size: 16px;
+                padding: 0 5px;
+                outline: none;
+                color: var(--color-for-texture);
+            }
+        }
+    }
+
+}
+
+.input_Container {
+    position: absolute;
+    right: 20px;
+    padding-top: 18px;
+}
+
+.hiddingBtn {
+    opacity: 0;
+    pointer-events: none
+}
+
+.showBtn {
+    opacity: 1;
+    pointer-events: visible;
+}
+
+.loadingBar {
+    top: -36.5px;
+}
+
+tr td .field {
+    border: none;
+    width: 100%;
+    outline-color: var(--main-orange-app);
+    height: 30px;
+    padding: 0 5px;
+}
+
+tr:hover .field {
+    background-color: #f5f5f5;
+    transition: .3s ease;
+}
+
+tfoot tr {
+    font-weight: bold !important;
+    cursor: inherit !important;
+}
+
+tfoot tr:hover {
+    background: none !important;
+}
+
+.totalSection {
+    position: absolute;
+    text-align: left;
+    left: 21px;
+    top: 57px;
+
+    h3 {
+        font-weight: 200;
+        font-size: 16px;
+        margin: 0;
+        margin-top: 5px;
+        letter-spacing: 1px;
+    }
+}
+
+.hasTabs{
+    min-height: calc(100vh - 264px);
+}
+
+@media screen and(max-width: 800px) {
+    .tableSection {
+        margin: 0 8px 117px 8px;
+    }
+
+    .tableSection .tableHeader .leftSide input {
+        padding: 0 5px;
+        width: 115px;
+    }
+
+    .tableTitle h2 {
+        font-size: 15px !important;
+    }
+
+    .tableContainer tr {
+        height: 32px;
+    }
+
+    .tableContainer {
+        font-size: 11px;
+    }
+
+}

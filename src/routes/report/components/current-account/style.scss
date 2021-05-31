@@ -1,0 +1,49 @@
+.headQueryDataRow{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 28px;
+    margin-top: 12px;
+    align-items: center;
+
+    .filterContiner{
+        position: relative;
+
+        .filterRow{
+            position: relative;
+            right: 9px;
+            top: -30px;
+        }
+
+        .filterData{
+            display: flex;
+            height: fit-content;
+            padding: 8px;
+            border: none;
+            background: #03a9f4;
+            fill: var(--main-white);
+            border-radius: 5px;
+            cursor: pointer;
+            outline-color: var(--light-main-color);
+
+            &:active{
+                background: var(--hovered-color);
+                transition: .3s all;
+            }
+
+            svg{
+                width: 30px;
+                height: 27px;
+            }
+        }
+    }
+
+    .selectField, .inputField{
+        width: 185px;
+    
+        ul {
+            width: 185px;
+            top: 53px;
+        }
+    }
+
+}

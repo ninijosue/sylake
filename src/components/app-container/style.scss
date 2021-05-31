@@ -1,0 +1,40 @@
+.appContainer {
+    width: calc(100vw - var(--nav-width) - var(--content-side-size));
+    height: calc(100vh - var(--header-height) - var(--content-side-size) );
+    position: absolute;
+    bottom: var(--content-side-size);
+    right: var(--content-side-size);
+    overflow-x: hidden;
+    background: var(--white-color);
+    border-radius: 10px;
+    box-shadow: var(--small-shadow);
+    transition: .3s ease;
+
+    .apprelative {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+      
+    }
+}
+
+@media screen and(max-width: 800px){
+    .appContainer{
+        width: calc(100vw - 31px);
+
+        // .apprelative{
+        //     display: flex;
+        //     flex-direction: column;
+        //     align-items: center;
+        // }
+    }
+}
+
+@media screen and(max-width: 600px){
+    .appContainer{
+        width: calc(100vw - 12px);
+        right: 5px;
+        bottom: 6px;
+    }
+}

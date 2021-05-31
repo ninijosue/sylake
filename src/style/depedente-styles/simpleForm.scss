@@ -1,0 +1,60 @@
+.formContainerPosition{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;  
+
+   
+    
+}
+
+.radioSelectForProd .singleSlelectElt{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+    
+    label{
+        font-size: 11px;
+    }
+}
+.formTitle{
+    font-size: 16px;
+    margin-bottom: 37px;
+    text-align: center;
+    position: relative;
+}
+.formTitle::after{
+    content: "";
+    position: absolute;
+    width: 41px;
+    height: 2px;
+    background-color: var(--main-orange-app);
+    padding-left: 10px;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    margin-top: 31px;
+
+}
+  
+.submitBtn{
+    display: grid;
+    justify-content: right;
+}
+
+.oneInputOfFormForUse{
+    .formTitle{
+        text-align: left;
+    }
+    
+    .formTitle::after{
+        transform: none;
+        left: 0;
+    }
+
+    .submitBtn{
+        margin-top: 12px;
+    }
+}

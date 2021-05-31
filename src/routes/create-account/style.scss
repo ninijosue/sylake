@@ -1,0 +1,174 @@
+.createAccountContainerFluid {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .rows {
+        padding: 48px;
+        background: var(--main-white);
+        box-shadow: 0px 2px 16px 0px #0000002e;
+        border-radius: 10px;
+        position: relative;
+
+        .backBtn{
+            position: absolute;
+            top: 11px;
+            border: none;
+            background: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4px;
+            outline-color: var(--outline-color);
+            fill: var(--gray-label);
+            cursor: pointer;
+            left: 10px;
+        }
+
+        h1 {
+            font-weight: 100;
+            margin-bottom: 75px;
+            margin-top: 0;
+            position: relative;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            width: 79px;
+            height: 2px;
+            background: var(--primary-blue-color);
+            left: 3px;
+            top: 60px;
+        }
+
+        .chooseProductRole {
+            max-width: 500px;
+
+            .prodRow {
+                margin: 30px 0;
+
+                .prodHead {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+
+                    label {
+                        margin: 0;
+                        font-size: 17px;
+                        font-weight: 600;
+                    }
+
+                }
+
+                p {
+                    font-size: 14px;
+                    margin-left: 30px;
+                    font-weight: 100;
+                }
+
+            }
+
+            .btnSubmitSubmit {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 54px;
+                margin-bottom: 23px;
+            }
+
+        }
+
+        .moneyRangeContainer {
+            max-width: 500px;
+
+            .inputSector {
+                display: flex;
+                justify-content: center;
+                margin: 48px;
+
+                input {
+                    width: 100px;
+                    height: 69px;
+                    border: 2px solid var(--hovered-color);
+                    border-radius: 6px;
+                    font-size: 30px;
+                    padding: 4px;
+                    color: var(--color-for-texture);
+                    outline-color: var(--gray-label);
+
+                }
+            }
+
+            .submtionOfMoneyRange {
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 25px;
+            }
+        }
+
+        .aggrementRow {
+            max-width: 500px;
+
+            .agree {
+                display: flex;
+                gap: 7px;
+                align-items: center;
+                margin: 40px 0;
+            }
+
+            .finishTheStapes {
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 24px;
+            }
+        }
+
+        .row {
+            display: flex;
+            gap: 31px;
+
+
+        }
+
+
+
+        .nextBtnSec {
+            display: flex;
+            justify-content: flex-end;
+            margin: 31px 0;
+        }
+
+        .inputField {
+            margin: 13px 0;
+
+            button {
+                display: flex;
+                padding: 3px;
+                fill: var(--ligth-white-color);
+                outline-color: var(--ligth-white-color);
+            }
+        }
+    }
+
+
+}
+
+@media screen and(max-width: 600px){
+    .createAccountContainerFluid {
+        .rows .row{
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .rows{
+            height: 100vh;
+            width: 100vw;
+            margin: 0 !important;
+            overflow-x: hidden;
+            display: grid;
+            justify-content: center;
+        }
+    }
+}

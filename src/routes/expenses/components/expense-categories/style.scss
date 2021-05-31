@@ -1,0 +1,16 @@
+@import "../../../../style/depedente-styles/table.scss";
+@import "../../../../style/depedente-styles/tableBtns.scss";
+
+.deleteCategory{
+    background: var(--error-color) ;
+}
+.categoriesExpensesTable{
+    .inputTD{
+        width: 37px !important;
+    }
+
+    tr{
+        font-size: 13px !important;
+        letter-spacing: 1px !important;
+    }
+}

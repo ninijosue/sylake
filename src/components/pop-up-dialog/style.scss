@@ -1,0 +1,74 @@
+.dialogBg{
+    background-color: rgba(0,0,0,0.3);
+    z-index: 999999999 !important;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mainDialog{
+    max-width: fit-content;
+    max-height: fit-content;
+    background: var(--white-color);
+    position: relative;
+    overflow-x: hidden;
+    border-radius: 5px;
+    box-shadow: -1px 7px 21px -1px #00000061;
+}
+
+
+.disactive{
+    opacity: 0;
+    pointer-events: none;
+    padding: 20px
+}
+.closeDialogBtn{
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    top: 5px;
+    cursor: pointer;
+    padding-top: 4px;
+    outline-color: var(--ligth-white-color);
+    z-index: 100;
+    fill: var(--gray-label);
+}
+.closeDialogBtn:hover svg{
+    fill: var(--main-orange-app);
+    transition: .5s ease;
+}
+
+.closeDialogBtn svg{
+    fill: var(--table-row-color);
+}
+.trialPostion{
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    position: relative;
+}
+
+@media print{
+    .disactive{
+        padding: 0 !important;
+        opacity: 1 !important;
+    }
+    .mainDialog{
+        max-width: inherit ;
+        max-height: inherit;
+        visibility: visible;
+        overflow: inherit;
+
+    }
+    .closeDialogBtn{
+        visibility: hidden;
+    }
+    .dialogBg{
+        visibility: hidden;
+    }
+
+}

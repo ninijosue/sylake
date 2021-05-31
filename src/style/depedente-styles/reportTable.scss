@@ -1,0 +1,35 @@
+.tableContentParentContainer {
+    padding-top: 22px;
+
+    table {
+        width: 100%;
+        text-align: left;
+        font-size: 14px;
+        padding: 0 9px 0 9px;
+        color: var(--accent-table-color);
+        border-collapse: collapse;
+
+        thead tr {
+            border-bottom: 1.5px solid #9695931f;
+            height: 58px;
+
+            th {
+                letter-spacing: 1px;
+            }
+        }
+
+        tbody tr {
+            height: 52px;
+            border-bottom: 1.5px solid #9695931f;
+            font-weight: 100;
+            color: var(--accent-table-color);
+            font-size: 13px;
+        }
+
+        tfoot{
+            tr{
+                font-weight: bold;
+            }
+        }
+    }
+}

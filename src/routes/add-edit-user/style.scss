@@ -1,0 +1,109 @@
+.addEditUserContainerFluid {
+    width: 100%;
+    height: fit-content;
+
+    h1 {
+        font-size: 26px;
+        font-weight: 100;
+        text-align: center;
+        margin-top: 34px;
+        margin-bottom: 50px;
+        position: relative;
+    }
+
+    h1::after {
+        content: "";
+        width: 66px;
+        height: 2px;
+        background: var(--primary-blue-color);
+        z-index: 1;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 46px;
+    }
+
+    .addEditContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .moreInfoAssociated{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .sitesInputD {
+            margin: 6px 6px;
+
+            ul {
+                top: -9px;
+            }
+        }
+
+        .fields {
+            box-shadow: var(--small-shadow);
+            padding: 17px;
+            border-radius: 10px;
+            margin: 0 20px;
+        }
+
+        .addEditRows {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .addEditRow {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                border-radius: 4px;
+                margin: 5px 0;
+
+                .inputField {
+                    margin: 10px 10px;
+                }
+
+            }
+
+            .submitBtn {
+                display: flex;
+                justify-content: flex-end;
+                margin: 30px 0;
+            }
+
+            .ulOfPermisions {
+                list-style: none;
+                margin-top: 31px;
+                margin-bottom: 45px;
+
+                h3 {
+                    font-size: 19px;
+                    font-weight: 100;
+                    letter-spacing: 1px
+                }
+
+                li {
+                    margin: 10px;
+                    font-size: 16px;
+                    display: flex;
+                    align-items: center;
+                    font-weight: 300;
+
+                    input {
+                        margin-right: 12px;
+                        margin-top: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and(max-width: 800px) {
+    .addEditRows .submitBtn {
+        margin-right: 40px !important;
+    }
+}

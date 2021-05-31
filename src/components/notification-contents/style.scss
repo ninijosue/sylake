@@ -1,0 +1,100 @@
+.notificationContentsContainerCover {
+    position: absolute;
+    z-index: 3;
+    width: 300px;
+    right: 18px;
+    background: var(--main-white);
+    box-shadow: 0 2px 20px 0px #00000038;
+    border-radius: 6px;
+    top: 26px;
+    padding: 10px;
+    color: var(--light-main-color);
+    max-height: 440px;
+    overflow-x: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: .1s ease;
+    min-height: 173px;
+
+    .notificationIsEmpty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100% - 28px);
+        position: absolute;
+        width: calc(100% - 28px);
+        opacity: .5;
+        font-size: 20px;
+        font-weight: 100;
+    }
+
+    .row {
+        margin: 5px 0;
+        margin-left: 3px;
+        cursor: pointer;
+        padding: 8px;
+        padding-left: 4px;
+        transition: .3s ease;
+        position: relative;
+
+        p {
+            font-size: 14px;
+            margin: 0;
+            margin-right: 24px;
+        }
+
+        button {
+            position: absolute;
+            display: flex;
+            padding: 0;
+            border: none;
+            background: none;
+            fill: var(--beauty-bleu);
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: .2s ease;
+            outline-color: var(--ligth-white-color);
+        }
+    }
+
+    .row:hover {
+        background: var(--tiny-bleu-transparent);
+        transition: .2s ease;
+    }
+
+}
+
+.notificationContentsContainerCover .row:hover button {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition: .2s ease;
+}
+
+.showContents {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@media screen and(max-width:600px) {
+    .notificationContentsContainerCover {
+        top: 36px;
+        right: -150px;
+    }
+}
+
+@media screen and(max-width:800px) {
+    .notificationContentsContainerCover button {
+        opacity: 1 !important;
+        pointer-events: auto;
+    }
+}
+
+@media screen and(max-width: 600px) {
+    .notificationContentsContainerCover {
+        top: 36px;
+        right: -150px;
+    }
+}

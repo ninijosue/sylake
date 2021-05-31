@@ -1,0 +1,100 @@
+.userInfoContainerFluid {
+    position: absolute;
+    z-index: 1;
+    width: 242px;
+    right: 25px;
+    background: var(--main-white);
+    box-shadow: 0 2px 20px 0px #00000038;
+    border-radius: 6px;
+    top: 41px;
+    padding: 10px;
+    color: var(--ligth-white-color);
+    max-height: 440px;
+    overflow-x: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s ease;
+    z-index: 2;
+
+    .userHead {
+        display: flex;
+        justify-content: center;
+        margin-top: 11px;
+        margin-bottom: 28px;
+        flex-direction: column;
+        align-items: center;
+
+        .avatarSection {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: var(--input-border-color);
+            width: 60px;
+            height: 60px;
+            box-shadow: 0 3px 7px 3px #0000000d;
+
+            span svg {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 100;
+            margin-top: 16px;
+            text-transform: capitalize;
+        }
+    }
+
+    .routes {
+        h6 {
+            margin-bottom: 17px;
+            margin: 0;
+            margin-top: 23px;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .routesRow {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        span {
+            font-size: 11px;
+            text-transform: capitalize;
+            background: var(--ligth-white-color);
+            color: var(--main-white);
+            padding: 4px 12px;
+            border-radius: 50px;
+            letter-spacing: 2px;
+            margin: 2px;
+        }
+
+
+    }
+
+    .logoutBtn {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 27px;
+        margin-top: 92px;
+
+        button {
+            min-width: 82px;
+            min-height: 37px;
+            font-size: 16px;
+        }
+    }
+}
+
+.show {
+    opacity: 1;
+    pointer-events: auto;
+    transition: .3s ease;
+}

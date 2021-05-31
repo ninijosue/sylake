@@ -1,0 +1,13 @@
+@import "../../style/depedente-styles/table.scss";
+@import "../../style/depedente-styles/tableBtns.scss";
+
+.dataNotEditable{
+    cursor: not-allowed !important;
+}
+.dataNotEditable:hover{
+    background: var(--main-white)  !important;
+}
+
+.takenActionRow{
+    text-transform: capitalize;
+}

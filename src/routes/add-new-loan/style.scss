@@ -1,0 +1,17 @@
+@import "../addNewSale/style.scss";
+
+.customerDetailsContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 215px);
+}
+
+@media screen and(max-width: 800px){
+    .customerDetailsContainer{
+        padding: 31px;
+        margin-top: 65px;
+
+        
+    }
+}

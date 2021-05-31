@@ -1,0 +1,62 @@
+
+ 
+  .visible{
+    opacity: 1 !important;
+    pointer-events: auto;
+  }
+  
+  .loadingContainer {
+    width: 100%;
+    height: 3px;
+    position: fixed;
+    background-color: hsla(0, 0%, 56%, 0.2);
+    z-index: 100;
+    top: 0;
+    right: 0;
+    opacity: 0 ;
+    pointer-events: none;
+  }
+  .mainLoading {
+    height: 10px;
+  }
+  .mainLoading::before {
+    content: "";
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    background: var(--primary-blue-color);
+    animation: loading-reverse 2.1s cubic-bezier(0, 0, 0.3, 1) infinite;
+  }
+  .mainLoading::after {
+    content: "";
+    justify-content: center;
+    background: var(--primary-blue-color);
+    position: absolute;
+    height: 3px;
+    animation: loading-spin 2s cubic-bezier(0, 0, 0.3, 1) infinite;
+  }
+  @keyframes loading-spin {
+    0% {
+      width: 0%;
+      transform: translateX(0%);
+      transform-origin: left;
+    }
+    100% {
+      width: 100%;
+      transform: translateX(150%);
+      transform-origin: left;
+    }
+  }
+  @keyframes loading-reverse {
+    0% {
+      width: 0%;
+      transform: translateX(0%);
+      transform-origin: left;
+    }
+    100% {
+      width: 100%;
+      transform: translateX(150%);
+      transform-origin: left;
+    }
+  }
+  

@@ -1,0 +1,63 @@
+.selectInput {
+    position: relative;
+}
+
+.optionsList {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    background-color: var(--white-color);
+    color: var(--accent-color);
+    z-index: 1;
+    width: 100%;
+    list-style: none;
+    max-height: 200px;
+    overflow-x: hidden;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+    top: 32px;
+    border-radius: 4px;
+    transition: .3s ease;
+    padding: 0 !important;
+
+    li {
+        padding: 8px;
+        margin: 2px 0;
+        padding: 8px 22px;
+        cursor: pointer;
+        outline-color: var(--secondary-color) ;
+
+        &[aria-selected=true],
+        &:hover {
+            background-color: var(--outline-color) !important;
+            transition: .3s ease !important;
+        }
+    }
+
+}
+
+.selectInput input {
+    cursor: default;
+}
+
+.selectInput button {
+    pointer-events: none;
+}
+
+.selectInput svg {
+    fill: var(--secondary-color);
+    transition: transform .3s cubic-bezier(0, 0, .3, 1);
+}
+
+.selectInput input:focus button svg {
+    transform: rotate(180deg);
+    fill: var(--accent-color);
+}
+
+.selectInput[expanded] {
+    .optionsList {
+        transition: .3s ease;
+
+        opacity: 1;
+        pointer-events: auto
+    }
+}

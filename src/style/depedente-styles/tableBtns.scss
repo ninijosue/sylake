@@ -1,0 +1,66 @@
+.tableNavigivationsBtns {
+    position: absolute;
+    display: inline-flex;
+    justify-content: space-between;
+    margin-top: 45px;
+    right: 25px;
+
+    .btnSpacing {
+        width: 23px;
+    }
+
+    button {
+        border: none;
+        background-color: var(--primary-blue-color);
+        fill: var(--main-white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content !important;
+        height: 36px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--primary-color);
+        letter-spacing: 1px;
+        border-radius: 9px;
+        font-family: var(--default-font-familly);
+        border-radius: 5px;
+        cursor: pointer;
+        outline-color: var(--ligth-white-color);
+        transition: .3s ease;
+        padding: 0 10px;
+    }
+
+    button:disabled {
+        background-color: var(--ligth-white-color);
+        cursor: not-allowed;
+    }
+
+    button:hover:disabled {
+        background-color: var(--ligth-white-color);
+    }
+
+    button:hover {
+        background-color: #909090;
+        transition: .3s ease;
+    }
+}
+
+.headerBtns {
+    width: 100%;
+    display: grid;
+    height: 94px;
+    position: absolute;
+    justify-content: center;
+}
+
+@media screen and(max-width: 800px){
+    .tableNavigivationsBtns button{
+        padding: 0 6px;
+        font-size: 10px;
+    }
+
+    .tableNavigivationsBtns .btnSpacing{
+        width: 10px;
+    }
+}

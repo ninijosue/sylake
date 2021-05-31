@@ -1,0 +1,46 @@
+.rowsContainerFluid {
+    .customerDetails {
+        position: relative;
+        margin: 23px;
+        box-shadow: var(--small-shadow);
+        padding: 12px;
+        border-radius: 6px;
+        min-height: 350px;
+        height: fit-content;
+    }
+
+    .loanProducts {
+        position: relative;
+    }
+
+    
+}
+
+.loanPayBtn {
+    position: absolute;
+    right: 21px;
+    background: var(--beauty-bleu);
+    border: none;
+    font-size: 16px;
+    padding: 8px;
+    width: 68px;
+    color: var(--main-white);
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 1;
+    outline-color: var(--light-main-color);
+    top: 37px;
+}
+
+.isPaied{
+    background: var(--verified);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    fill: var(--main-white-color);
+    font-size: 16px;
+    gap: 2px;
+    width: 73px;
+    padding: 7px;
+    cursor: not-allowed;
+}

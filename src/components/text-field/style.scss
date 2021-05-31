@@ -1,0 +1,94 @@
+.formElement {
+    position: relative;
+    height: 48px;
+    margin: 20px 0px;
+    width: 280px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+.formElement input {
+    width: 100%;
+    height: 100%;
+    padding: 0 16px;
+    outline-color: var(--secondary-color);
+    border: 1px solid var(--ligth-white-color);
+    border-radius: 8px;
+    background-color: var(--white-color);
+}
+
+.formElement input::-webkit-file-upload-button{
+    background: transparent;
+    height: 100%;
+    border-width: 0;
+    color: inherit;
+    cursor: pointer;
+    outline-color: transparent;
+}
+
+.formElement input:not(:placeholder-shown):invalid {
+    outline-color: red !important;
+    border-color: red !important;
+}
+.formElement input:not(:placeholder-shown):invalid ~ label {
+    color: red !important;
+}
+.formElement input:focus ~ label,
+.formElement input:not(:placeholder-shown) ~ label {
+    transform-origin: left;
+    transform: translateY(-130%) scale(0.8);
+}
+.formElement input:focus ~ label {
+    color: var(--secondary-color);
+}
+.formElement label {
+    position: absolute;
+    left: 16px;
+    height: fit-content;
+    padding: 8px;
+    background-color: var(--white-color);
+    transition: transform 0.3s cubic-bezier(0, 0, 0.3, 1);
+    transform: none;
+    padding: 0 4px;
+    color: var(--ligth-white-color);
+    cursor: text;
+}
+
+::placeholder {
+    
+    opacity: 0;
+    color: transparent;
+}
+.leadingIcon,
+.prefixIcon {
+    position: absolute;
+    background-color: transparent;
+    border-width: 0;
+    cursor: pointer;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.withLeadingSpace{
+    padding-left:  32px!important;
+}
+.withLeadingSpace ~ label{
+    padding-left: 20px;
+}
+.leadingIcon {
+    left: 8px;
+}
+.prefixIcon {
+    right: 8px;
+}
+
+@media screen and(max-width: 800px){
+    .formElement{
+        width: 236px !important;
+    }
+
+    .formElement label{
+        font-size: 14px;
+    }
+}

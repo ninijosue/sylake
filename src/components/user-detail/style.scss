@@ -1,0 +1,78 @@
+.sendLink {
+    color: var(--secondary-color);
+    cursor: pointer;
+    text-decoration: underline;
+    transition: .1s ease;
+}
+
+.sendLink:hover {
+    color: var(--weak-black-color);
+    transition: .1s ease;
+}
+
+.butAlsoIsSitesContainerList{
+    margin-bottom: 37px !important;
+}
+
+.ressourcesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 55px;
+    padding-top: 32px;
+    position: relative;
+
+    label {
+        position: absolute;
+        font-size: 15px;
+        top: 1px;
+        color: var(--ligth-white-color);
+        letter-spacing: 1px;
+    }
+
+    .ressource {
+        display: flex;
+        background: #517fac38;
+        margin: 4px 6px;
+        justify-content: space-between;
+        border-radius: 31px;
+
+        h5 {
+            margin: 10px 7px;
+            font-weight: 400;
+            text-transform: capitalize;
+            margin-right: 7px
+        }
+
+        button {
+            background: none;
+            outline: none;
+            border: none;
+            fill: var(--color-for-texture);
+            padding: 7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: .3s ease;
+            padding-left: 0;
+        }
+
+        button:active {
+            fill: var(--none-solid-blue-hover);
+            transition: .3s ease;
+        }
+
+
+    }
+
+}
+
+@media screen and(max-width: 500px) {
+    .ressourcesContainer .ressource h5 {
+        font-size: 10px;
+    }
+
+    .ressourcesContainer .ressource button {
+        padding: 3px;
+    }
+}

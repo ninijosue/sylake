@@ -1,0 +1,148 @@
+.appHeader {
+    position: absolute;
+    top: 0;
+    width: calc(100vw - var(--nav-width));
+    right: 0;
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .navButtonToogle {
+        border: none;
+        background: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2px;
+        fill: var(--hovered-color);
+        outline-color: var(--light-main-color);
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+
+        svg {
+            width: 35px;
+            height: 35px;
+        }
+    }
+
+    .rightSideHeader {
+        display: flex;
+        width: 100%;
+        max-width: 281px;
+        justify-content: space-around;
+        align-items: center;
+
+        .clientAppState{
+            span{
+                color: var(--beauty-bleu);
+                font-weight: 100;
+                font-size: 12px;
+            }
+        }
+
+        span {
+            svg {
+                width: 26px;
+                height: 26px;
+                fill: var(--light-main-color);
+            }
+        }
+
+        .ringIcon {
+            display: flex;
+            border: none;
+            background: none;
+            fill: var(--light-main-color);
+            cursor: pointer;
+            outline-color: var(--outline-color);
+            padding: 0;
+            position: relative;
+
+            span {
+                position: absolute;
+                right: -1px;
+                font-size: 11px;
+                background: var(--error-color);
+                color: var(--main-white);
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: bold;
+                top: -1px;
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        .ringContainer {
+            position: relative;
+            width: fit-content;
+            height: fit-content;
+        }
+
+        .userContainer {
+            position: relative;
+        }
+
+        .userAvatarRow {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 126px;
+            justify-content: space-around;
+
+            .avatarImage {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                background: var(--white-color);
+                border-radius: 50%;
+                fill: var(--light-main-color);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid var(--outline-color);
+                position: relative;
+
+                svg {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .username {
+                font-weight: 500;
+                text-transform: capitalize;
+                color: var(--none-hard-text-color);
+                font-size: 12px;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+@media screen and(max-width: 800px) {
+    .appHeader {
+        width: 100vw;
+
+        .rightSideHeader {
+            margin-right: -9px;
+            gap: 32px;
+            padding-right: 30px;
+            justify-content: flex-end;
+        }
+
+        .navButtonToogle {
+            opacity: 1;
+            pointer-events: auto;
+            margin-left: 17px;
+        }
+
+
+    }
+}

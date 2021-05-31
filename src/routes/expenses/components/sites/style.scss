@@ -1,0 +1,12 @@
+@import "../../../../style/depedente-styles/table.scss";
+@import "../../../../style/depedente-styles/tableBtns.scss";
+.sitesTable{
+    .inputTD{
+        width: 37px !important;
+    }
+
+    tr{
+        font-size: 13px !important;
+        letter-spacing: 1px !important;
+    }
+}
