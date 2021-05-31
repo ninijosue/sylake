@@ -25,7 +25,7 @@ if (!PRODUCTION) {
   AppDB.auth().useEmulator("http://localhost:9099");
   AppDB.functions().useEmulator("localhost", 5001)
   AppFirestore.settings({
-    host: "localhost:3000",
+    host: "localhost:8081",
     ssl: false
   })
 }
