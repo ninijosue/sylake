@@ -133,11 +133,14 @@ export default class LoansModel {
 
     }
 
-    static async getAllCustomersLoans(primaryId, site) {
+    static async getAllCustomersLoans(primaryId, site, isPaidCredits) {
         const root = AppFirestore.collection("owner").doc(`${primaryId}/sites/${site}`);
         const loans = [];
         try {
-            const loansSnaps = await root.collection("loans").orderBy("creationTime", "desc").get()
+            let reference = root.collection("loans");
+            if(isPaidCredits) reference =  reference.where("isPaied", "==", true);
+            else  reference = reference.where("isPaied", "==", false);
+            const loansSnaps = await reference.orderBy("creationTime", "desc").get()
             for (const doc of loansSnaps.docs) {
                 const totalAmount = 0;
                 const productsSnaps = await doc.ref.collection("products").get();
@@ -166,6 +169,8 @@ export default class LoansModel {
             return []
         }
     }
+
+
 
     /**
      * 

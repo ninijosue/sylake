@@ -94,7 +94,7 @@ export default class UnpaidCredits extends Component{
         const remaingAmount = rowData.totalAmount - rowData.paiedAmount;
         const site = this.props.site;
         if (rowData.isPaied) return;
-        popup(<PayLoanAMount site={(site)} reflesh={_ => this._getAllLoans(site)} docRef={rowData.ref}
+        popup(<PayLoanAMount totalLoanAmount={rowData.creditAmount} site={(site)} reflesh={_ => this._getAllLoans(site)} docRef={rowData.ref}
             paiedAmount={rowData.paiedAmount} remaingAmount={remaingAmount} />);
     }
 

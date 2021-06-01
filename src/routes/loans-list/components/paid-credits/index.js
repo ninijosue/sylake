@@ -30,7 +30,7 @@ export default class PaidCredits extends Component{
         if (!site || !didIncludeInUserSites) return;
         this.props.isLoading(true);
         const primaryId = this.user.primaryId;
-        const loans = await LoansModel.getAllCustomersLoans(primaryId, site);
+        const loans = await LoansModel.getAllCustomersLoans(primaryId, site, true);
         this.setState({ loans });
         this.props.isLoading(false);
     }
@@ -59,12 +59,11 @@ export default class PaidCredits extends Component{
         const isPaied = rowData.isPaied;
         const permissions = this.user.isOwner ? allPermission : this.user.permittedRessources;
         return <tr onClick={evt => this.rowClicked(evt.target.tagName, rowData)}>
-            <td>{inde + 1}</td>
+            <td>{index + 1}</td>
             <td>{rowData.customerNames.toUpperCase()}</td>
             <td>{rowData.phoneNumber}</td>
             <td>{rowData.location.toUpperCase()}</td>
             <td>{rowData.totalAmount.toLocaleString()}</td>
-            <td>{rowData.paiedAmount.toLocaleString()}</td>
             <td>{rowData.deadline}</td>
             <td>{rowData.doneBy.names.toUpperCase()}</td>
         </tr>;
@@ -92,7 +91,6 @@ export default class PaidCredits extends Component{
                         <ColDef name="phoneNumber" >Phone number</ColDef>
                         <ColDef name="location" >Location</ColDef>
                         <ColDef name="totalAmount" >Total amount ({this.user.moneyDescription})</ColDef>
-                        <ColDef name="paiedAmount" >Paid amount ({this.user.moneyDescription})</ColDef>
                         <ColDef name="deadline" >DeadLine</ColDef>
                         <ColDef name="createdBy" >Registered by</ColDef>
                     </DataTable>

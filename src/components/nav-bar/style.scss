@@ -171,7 +171,7 @@
     border-radius: unset !important;
     padding: 24px !important;
   }
-  
+
   .siteSelectElt {
     width: 182px !important;
   }
@@ -184,5 +184,15 @@
     z-index: 1;
     position: absolute;
     top: 0;
+  }
+}
+
+@media screen and(max-width: 600px) {
+  .navContainerFluid .container ul {
+    padding-bottom: 75px;
+  }
+
+  .siteSelectRow {
+    bottom: -12px;
   }
 }
