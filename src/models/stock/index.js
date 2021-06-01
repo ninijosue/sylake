@@ -1,3 +1,4 @@
+import Toast from "../../components/toast";
 import { AppFirestore } from "../../db";
 import { getCurrentDate, getCurrentMonth, getCurrentYear } from "../../helper/utils";
 
@@ -278,7 +279,8 @@ export default class StockModel {
                             await stockCollection.doc(`${productInStockId}`).update({ quantity: newQuantity });
                             await root.collection("stockLogs").add(dataForFire);
                         }
-                        else { alert(`${productName} didn't saved because the quantity demanded is more than the quantity in stock.`) }
+                        else Toast.create(`${productName.toUpperCase()} didn't saved because the quantity demanded is more than the quantity in stock.`, {errorMessage: true});
+                        
                     }
                 }
             }

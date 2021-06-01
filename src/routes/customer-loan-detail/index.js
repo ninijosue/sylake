@@ -10,6 +10,7 @@ import CustomerLoanDetails from '../../components/add-edit-customer-loan';
 import PayLoanAMount from '../../components/pay-loan-mount';
 import { verifiedIcon } from '../../assets/icons/icons';
 import { allPermission } from '../../generators/routeVerifier';
+import Toast from '../../components/toast';
 
 export default class CustomerLoanInfo extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ export default class CustomerLoanInfo extends Component {
 
     async getLoandDetails(site) {
         const isInUserSites = this.sites.includes(site);
-        if(!site && !isInUserSites) return alert("Please, select the appropriete site!");
+        if(!site && !isInUserSites) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const primaryId = this.user.primaryId;
         this.setState({ isLoadingForLoanDetails: true });
         const loanDetails = await LoansModel.getLoanDetail(primaryId, this.loanId, site);
@@ -69,14 +70,14 @@ export default class CustomerLoanInfo extends Component {
 
     editCustomerInfo() {
         const site = this.props.site;
-        if(!site) return alert("No site selected!");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         popup(<CustomerLoanDetails site={(this.props.site)} reflesh={_ => this.getLoandDetails(site)} user={this.user} rowData={this.state.loanDetails} />)
     }
 
 
     _pay() {
         const site = this.props.site;
-        if(!site) return alert("No site selected!");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         if (this.state.remaingAmount == 0) return;
         const primaryId = this.user.primaryId;
         popup(<PayLoanAMount site={(site)} reflesh={_ => this.getLoandDetails(site)} docRef={this.state.loanDetails.ref}

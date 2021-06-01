@@ -7,6 +7,7 @@ import Form from '../form';
 import Loading from '../loading-C';
 import Select from '../select-C';
 import TextField from '../text-field';
+import Toast from '../toast';
 import styles from "./style.scss";
 
 export default class UpdateLoanProduct extends Component {
@@ -62,7 +63,7 @@ export default class UpdateLoanProduct extends Component {
 
     async _formSubmition(data) {
         const site = this.props.site;
-        if (!site) return alert("There is no site selected!");
+        if (!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         if (!data) return;
         let productName = data.productName;
         const quantity = Number(data.quantity);
@@ -74,7 +75,8 @@ export default class UpdateLoanProduct extends Component {
         const res = await LoansModel.updateLoanProduct(this.primaryId, dataForFire, this.rowData, site);
         this.setState({ isLoading: false });
         this.props.reflesh()
-        alert(res.message);
+        if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+        else Toast.create(res.message, {successMessage: true});
         closePopup()
     }
 
@@ -82,7 +84,7 @@ export default class UpdateLoanProduct extends Component {
         if(!selectedData.value) return;
         const productName = selectedData.value.toLowerCase()
         const site = this.props.site;
-        if (!site || !this.primaryId) return alert("There no site selected!");
+        if (!site || !this.primaryId) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         this.setState({isLoading: true });
         const productGroupsInStock = await StockModel.getProductGroupsInStock(productName, this.primaryId, site);
         if(productGroupsInStock.length == 0) this.setState({saveBtnDisabled: true});

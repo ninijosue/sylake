@@ -8,6 +8,7 @@ import { searchIcon } from '../../assets/icons/icons';
 import FilterByDateFields from '../../components/filter-by-date-fields';
 import { allPermission } from '../../generators/routeVerifier';
 import { choosenDate } from '../../helper/utils';
+import Toast from '../../components/toast';
 
 export default class SpecificProductLogInStock extends Component {
     constructor(props) {
@@ -43,8 +44,8 @@ export default class SpecificProductLogInStock extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", { errorMessage: true });
         const site = this.props.site;
         const initialDate = choosenDate({ date: new Date() });
         this._getAllProducts(site, initialDate);
@@ -83,7 +84,7 @@ export default class SpecificProductLogInStock extends Component {
     async deletePurchasedProduct() {
         const site = this.props.site;
         const state = this.state;
-        if (!site) return alert("Please choose a site!");
+        if (!site) return Toast.create("There is no site selected. Please check!", { errorMessage: true });
         const primaryId = this.user.primaryId;
         const productsToDelete = Array.from(this.state.checkedData.values());
         if (productsToDelete.length == 0) return;
@@ -94,11 +95,10 @@ export default class SpecificProductLogInStock extends Component {
             const res = await PurchaseLogsModel.deletePurchasedProduct(product, primaryId, site);
             if (res.status == 500) {
                 this.props.isLoading(false);
-                return alert(`Failled to delete ${product.productName.toUpperCase()} created on ${new Date(product.tx_t).toLocaleString()}`);
+                return Toast.create(`Failled to delete ${product.productName.toUpperCase()} created on ${new Date(product.tx_t).toLocaleString()}`, { errorMessage: true });
             }
         }
         this.props.isLoading(false);
-        alert("Deletion done successfully.");
         const date = state.date ? state.date : choosenDate({ date: new Date() });
         await this._getAllProducts(site, date);
         this.setState({ checkedData: new Map() });

@@ -7,6 +7,7 @@ import styles from "./style.scss";
 import UsersModel from '../../models/users';
 import closePopup from '../../helper/closePopUp';
 import { AppDB } from '../../db';
+import Toast from '../toast';
 export default class AddOrEditUser extends Component {
     constructor() {
         super();
@@ -25,7 +26,7 @@ export default class AddOrEditUser extends Component {
 
     componentDidMount() {
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const rowData = this.props.rowData;
         const names = this.names.current.base.querySelector("input");
         names.value = rowData ? rowData.names : "";
@@ -57,8 +58,8 @@ export default class AddOrEditUser extends Component {
     }
 
     async formSubmition(data) {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const user = this.props.user;
         if(!data.administrativeGroup || data.administrativeGroup == "") return;
         if(!user.isOwner) return;
@@ -72,12 +73,14 @@ export default class AddOrEditUser extends Component {
         if (!rowData) {
             const owner = user.uid;
             const res = await UsersModel.createUser(dataForFire, owner);
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         else{
             const owner = user.uid;
             const res = await UsersModel.updateUser(dataForFire, owner, rowData.docRef.id);
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         this.setState({ isLoading: false });
         this.props.reflesh();

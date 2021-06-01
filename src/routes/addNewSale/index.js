@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import Form from '../../components/form';
 import Select from '../../components/select-C';
 import TextField from '../../components/text-field';
+import Toast from '../../components/toast';
 import ProductModel from '../../models/products';
 import SalesModel from '../../models/sales';
 import StockModel from '../../models/stock';
@@ -12,7 +13,7 @@ export default class AddNewSale extends Component {
     constructor(props) {
         super(props);
         props.setSite
-        
+
         this.state = {
             listOfRows: [],
             recordedData: new Map(),
@@ -30,7 +31,7 @@ export default class AddNewSale extends Component {
 
     async getProducts(siteName) {
         const didIncludeInUserSites = this.sites.includes(siteName);
-        if(!siteName || !didIncludeInUserSites) return;
+        if (!siteName || !didIncludeInUserSites) return;
         const primaryId = this.user.primaryId;
         const productsDefine = this.user.productsDefine;
         this.props.isLoading(true);
@@ -46,11 +47,8 @@ export default class AddNewSale extends Component {
     }
 
     componentDidMount() {
-        // document.addEventListener("sitechange", evt=>{
-        //     console.log("site changed", evt.detail);
-        //  })
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", { errorMessage: true });
         const listOfRows = this.state.listOfRows;
         listOfRows.push(this.rowFields);
         this.setState({ listOfRows });
@@ -60,15 +58,15 @@ export default class AddNewSale extends Component {
     componentDidUpdate(prevProps) {
         const prevSite = prevProps.site;
         const nextSite = this.props.site;
-        if(prevSite !== nextSite) this.getProducts(nextSite);
+        if (prevSite !== nextSite) this.getProducts(nextSite);
     }
-    setSite(siteName){
+    setSite(siteName) {
         this.getProducts(siteName);
     }
 
     async setSelectedProduct(data, index) {
         const site = this.props.site;
-        if(!site) return alert("Please choose a site!");
+        if (!site) return Toast.create("There is no site selected. Please check!", { errorMessage: true });
         const productName = data.label.toLowerCase();
         const primaryId = this.user.primaryId;
         const products = this.state.products;
@@ -85,8 +83,10 @@ export default class AddNewSale extends Component {
             productRole: productData.productRole,
             productName: productData.productName
         };
-        const dataForMap = { ...recordedData.get(index), 
-            ...productRoleAndName };
+        const dataForMap = {
+            ...recordedData.get(index),
+            ...productRoleAndName
+        };
         delete dataForMap.productId;
         dataForMap.productId = value;
 
@@ -148,7 +148,7 @@ export default class AddNewSale extends Component {
                     </Select>
                     <TextField disabled={this.state.isLoading || groups.length === 0} label="Quantity"
                         onChange={evt => this.setTypedQuantityValue(evt.target.value, index)} type="number" />
-                        <TextField disabled={this.state.isLoading || groups.length === 0} label="Amount (optional)"
+                    <TextField disabled={this.state.isLoading || groups.length === 0} label="Amount (optional)"
                         onChange={evt => this.setTypedAmountValue(evt.target.value, index)} type="number" />
                     <div className={styles.productInstockToChoose}>
                         <p>Choose the product to dropout</p>
@@ -176,7 +176,7 @@ export default class AddNewSale extends Component {
 
     async submitAllReccorded() {
         const site = this.props.site;
-        if(!site) return alert("Please choose a site");
+        if (!site) return Toast.create("There is no site selected. Please check!", { errorMessage: true })
         const recordedData = new Map();
         const recordedDataInState = this.state.recordedData;
         const unDoneProducts = [];
@@ -224,13 +224,14 @@ export default class AddNewSale extends Component {
                 if (productsDefine == "default") {
                     if (!productInStock) {
                         this.props.isLoading(false);
-                        return alert(`There is a problem on product number ${value.productName.toUpperCase()} please verify and try again.`);
+                        return Toast.create(`There is a problem on product number ${value.productName.toUpperCase()} please verify and try again.`, { errorMessage: true });
                     }
                     const quantity = Number(value.quantity);
                     const stockQuantity = Number(productInStock.quantity);
                     if (quantity > stockQuantity) {
                         this.props.isLoading(false);
-                        return alert(`The stock quantity for product (${value.productName.toUpperCase()}) is not enought to serve the the amounte of product.`);
+                        return Toast.create(`The stock quantity for product (${value.productName.toUpperCase()}) is not enought to serve the the amounte of product.`, { errorMessage: true });
+
                     }
                     const passedProduct = value;
                     productsReady.push(passedProduct);
@@ -242,13 +243,13 @@ export default class AddNewSale extends Component {
                     else if (productRole == "both") {
                         if (!productInStock) {
                             this.props.isLoading(false);
-                            return alert(`There is a problem on product number ${value.productName.toUpperCase()} please verify and try again.`);
+                            return Toast.create(`There is a problem on product number ${value.productName.toUpperCase()} please verify and try again.`, { errorMessage: true });
                         }
                         const quantity = Number(value.quantity);
                         const stockQuantity = Number(productInStock.quantity);
                         if (quantity > stockQuantity) {
                             this.props.isLoading(false);
-                            return alert(`The stock quantity for product (${value.productName.toUpperCase()}) is not enought to serve the the amounte of product.`);
+                            return Toast.create(`The stock quantity for product (${value.productName.toUpperCase()}) is not enought to serve the the amounte of product.`, { errorMessage: true })
                         }
                         const passedProduct = value;
                         productsWithRoleOfBoth.push(passedProduct);
@@ -261,51 +262,48 @@ export default class AddNewSale extends Component {
         }
         this.props.isLoading(false);
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", { errorMessage: true });
         const primaryId = this.user.primaryId;
         const productsDefine = this.user.productsDefine;
         if (productsDefine == "default") {
             const res = await SalesModel.addSoldProducts(productsReady, primaryId, this.user, site);
-            alert(res.message);
+            if (res.status !== 200) Toast.create(res.message, { errorMessage: true });
+            else Toast.create(res.message, { successMessage: true });
         }
         else {
-            try {
                 const res = await SalesModel
                     .addSoldProductsWhenProductsDefineIsCustomProductRoleNotBoth(productsWithRoleOfSales, primaryId, this.user, site);
                 await SalesModel.addSoldProducts(productsWithRoleOfBoth, primaryId, this.user, site);
-                alert(res.message)
-            } catch (error) {
-                console.error(error);
-                alert("Failled to save product(s)")
-            }
+                if (res.status !== 200) Toast.create(res.message, { errorMessage: true });
+                else Toast.create(res.message, { successMessage: true });
 
         }
         this.props.isLoading(false);
     }
-    
+
 
 
 
     render() {
 
         return <div className={styles.newSalesFormContainerFluid}>
-                    <div className={styles.formHeader}>
-                        <h2>Add new sales</h2>
-                        <button onClick={_ => this.setState({ listOfRows: [], recordedData: new Map() })} className={styles.cleanBtn}>
-                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24" /></g><g><path d="M16,11h-1V3c0-1.1-0.9-2-2-2h-2C9.9,1,9,1.9,9,3v8H8c-2.76,0-5,2.24-5,5v7h18v-7C21,13.24,18.76,11,16,11z M19,21h-2v-3 c0-0.55-0.45-1-1-1s-1,0.45-1,1v3h-2v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3H9v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3H5v-5 c0-1.65,1.35-3,3-3h8c1.65,0,3,1.35,3,3V21z" /></g></svg>
-                        </button>
-                    </div>
-                    <div className={styles.newSalesFormConteiner}>
-                        <Form>
-                            {this.state.listOfRows.map((row, index) => row(index, row))}
-                            <button onClick={_ => this.addRowField()} className={styles.addProductFieldBtn} type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none" /><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
-                            </button>
-                        </Form>
-                        <div className={styles.submitAllReccorded}>
-                            <Button onClick={_ => this.submitAllReccorded()} type="button">Save</Button>
-                        </div>
-                    </div>
-                </div>;
+            <div className={styles.formHeader}>
+                <h2>Add new sales</h2>
+                <button onClick={_ => this.setState({ listOfRows: [], recordedData: new Map() })} className={styles.cleanBtn}>
+                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24" /></g><g><path d="M16,11h-1V3c0-1.1-0.9-2-2-2h-2C9.9,1,9,1.9,9,3v8H8c-2.76,0-5,2.24-5,5v7h18v-7C21,13.24,18.76,11,16,11z M19,21h-2v-3 c0-0.55-0.45-1-1-1s-1,0.45-1,1v3h-2v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3H9v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3H5v-5 c0-1.65,1.35-3,3-3h8c1.65,0,3,1.35,3,3V21z" /></g></svg>
+                </button>
+            </div>
+            <div className={styles.newSalesFormConteiner}>
+                <Form>
+                    {this.state.listOfRows.map((row, index) => row(index, row))}
+                    <button onClick={_ => this.addRowField()} className={styles.addProductFieldBtn} type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none" /><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
+                    </button>
+                </Form>
+                <div className={styles.submitAllReccorded}>
+                    <Button onClick={_ => this.submitAllReccorded()} type="button">Save</Button>
+                </div>
+            </div>
+        </div>;
     }
 }

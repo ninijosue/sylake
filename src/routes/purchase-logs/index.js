@@ -7,6 +7,7 @@ import EditPurchasedProduct from '../../components/edit-purchase-log';
 import { searchIcon } from '../../assets/icons/icons';
 import FilterByDateFields from '../../components/filter-by-date-fields';
 import { choosenDate } from '../../helper/utils';
+import Toast from '../../components/toast';
 
 export default class PurchaseLogs extends Component {
     constructor(props) {
@@ -36,8 +37,8 @@ export default class PurchaseLogs extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", { errorMessage: true });
         const date = choosenDate({ date: new Date() });
         this.setState({ date });
         this._getAllProducts(this.props.site, date);
@@ -103,7 +104,7 @@ export default class PurchaseLogs extends Component {
 
     _rowDef(row, index, rowData) {
         const takenAction = rowData.takenAction;
-        const tekenActionVerified = takenAction == "purchased" || takenAction== "restored" ? "purchased" : takenAction;
+        const tekenActionVerified = takenAction == "purchased" || takenAction == "restored" ? "purchased" : takenAction;
         const takenActionDependingToCredit = takenAction == "loan" ? "credit" : takenAction;
         return <tr className={rowData.takenAction !== "purchased" ? styles.dataNotEditable : ""}
             title={tekenActionVerified !== "purchased" ? "Not editable here" : ""}
@@ -144,11 +145,10 @@ export default class PurchaseLogs extends Component {
             const res = await PurchaseLogsModel.deletePurchasedProduct(product, primaryId, site);
             if (res.status == 500) {
                 this.props.isLoading(false);
-                return alert(`Failled to delete ${product.productName.toUpperCase()} created on ${new Date(product.tx_t).toLocaleString()}`);
+                return Toast.create(`Failled to delete ${product.productName.toUpperCase()} created on ${new Date(product.tx_t).toLocaleString()}`, { errorMessage: true })
             }
         }
         this.props.isLoading(false);
-        alert("Deletion done successfully.");
         await this._getAllProducts(site, date);
         this.setState({ checkedData: new Map() });
     }

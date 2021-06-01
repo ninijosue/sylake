@@ -7,6 +7,7 @@ import Form from '../form';
 import Loading from '../loading-C';
 import Select from '../select-C';
 import TextField from '../text-field';
+import Toast from '../toast';
 import styles from "./style.scss";
 export default class EditSoldProduct extends Component {
     constructor(props) {
@@ -50,8 +51,8 @@ export default class EditSoldProduct extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         this.getListOfProducts();
         const rowData = this.props.rowData;
         this.getProductInStock(rowData.productName)
@@ -68,9 +69,8 @@ export default class EditSoldProduct extends Component {
     async _formSubmition(data) {
         const onLine = window.navigator.onLine;
         const site = this.props.site;
-        console.log(data);
-        // if (!onLine) return alert("There is no internet connection.");
-        if(!site) return alert("Choose site please!");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const IntialproductIdForSale = this.state.productIdForSale;
         const rowData = this.props.rowData;
         const submProductId = data.productId;
@@ -86,7 +86,7 @@ export default class EditSoldProduct extends Component {
             this.setState({isLoading: true});
             const rootProduct = await ProductModel.getSingleProduct(this.primaryId, site, productSelectedId);
             this.setState({isLoading: false});
-            if(!rootProduct) return alert("Product not found!");
+            if(!rootProduct) return Toast.create("Product not found!", {errorMessage: true});
             unitPrice = rootProduct.unitPrice;
         }
         if(!data.quantity || !purchaseUnitPrice || isNaN(purchaseUnitPrice) ) return;
@@ -117,7 +117,8 @@ export default class EditSoldProduct extends Component {
             this.user,
             site
             );
-        alert(res.message);
+        if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+        else Toast.create(res.message, {successMessage: true});
         this.setState({ isLoading: false });
         this.props.reflesh();
         closePopup();

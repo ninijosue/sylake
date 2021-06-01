@@ -3,6 +3,7 @@ import { searchIcon } from '../../assets/icons/icons';
 import { ColDef, DataTable } from '../../components/data-table';
 import FilterByDateFields from '../../components/filter-by-date-fields';
 import SoldDetails from '../../components/sold-details';
+import Toast from '../../components/toast';
 import { allPermission } from '../../generators/routeVerifier';
 import popup from '../../helper/popUp';
 import { choosenDate } from '../../helper/utils';
@@ -41,8 +42,8 @@ export default class Sales extends Component {
 
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", { errorMessage: true })
         const initialDate = choosenDate({ date: new Date() });
         this._getAllSales(this.props.site, initialDate);
         document.addEventListener("datechange", evt => {
@@ -88,7 +89,7 @@ export default class Sales extends Component {
         const date = this.state.date ? this.state.date : choosenDate({ date: new Date() });
         const productsToDelete = Array.from(this.state.checkedData.values());
         if (productsToDelete.length == 0) return;
-        if (!site) return alert(`Select site please!`);
+        if (!site) return Toast.create("There is no site selected. Please check!", { errorMessage: true });
         const ask = confirm(`Do you want delete ${productsToDelete.length == 1 ? "this" : "these"} ${productsToDelete.length == 1 ? "product" : "products"}?`);
         if (!ask) return;
         this.props.isLoading(true);
@@ -111,11 +112,11 @@ export default class Sales extends Component {
                 this.setState({ checkedData: new Map() });
                 this.props.isLoading(false);
                 this._getAllSales(site, date);
-                alert(`Failled to delete ${product.productName} created on ${new Date(product.tx_t).toLocaleString()}`);
+                Toast.create(`Failled to delete ${product.productName} created on ${new Date(product.tx_t).toLocaleString()}`, { errorMessage: true });
                 return;
             }
         }
-        alert(`${productsToDelete.length == 1 ? "Product" : "Products"} deleted successfully`);
+        Toast.create(`${productsToDelete.length == 1 ? "Product" : "Products"} deleted successfully.`, { errorMessage: true });
         this.props.isLoading(false);
         this._getAllSales(site, date);
         this.setState({ checkedData: new Map() });
@@ -160,7 +161,7 @@ export default class Sales extends Component {
 
     render() {
         const checkedData = Array.from(this.state.checkedData.values());
-        console.log(this.state.allSales,"----", checkedData);
+        console.log(this.state.allSales, "----", checkedData);
         const permissions = this.user.isOwner ? allPermission : this.user.permittedRessources;
         return (
             <>

@@ -7,6 +7,7 @@ import ExpensesChart from "../../components/expenses-chart";
 import PurchaseChart from "../../components/purchase-chart";
 import LoanChart from "../../components/loan-chart";
 import MainAnalyse from "../../components/main-analyse";
+import Toast from "../../components/toast";
 // import DashboardModel from "../../models/dashboard";
 
 export default class Dashboard extends Component {
@@ -57,8 +58,8 @@ export default class Dashboard extends Component {
 
     componentDidMount() {
 
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         this.unstableStockProducts();
         this.gettotalAmountOfAllExpenses();
         this.getTotalAmountOfSales();
@@ -66,9 +67,6 @@ export default class Dashboard extends Component {
     }
 
     render(props, state) {
-        // totalAmountOfAllExpenses: 0,
-        // totalAmountInStock: 0,
-        // totalAmountOfSales: 0,
         const netProfit = Number(state.totalAmountOfSales) - (Number(state.totalPurchaseAmount) + Number(state.totalAmountOfAllExpenses) ) ;
         const screenWidth = screen.width;
         return (

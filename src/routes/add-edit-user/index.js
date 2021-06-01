@@ -7,6 +7,7 @@ import Button from '../../components/Button/index';
 import { allPermission } from '../../generators/routeVerifier';
 import SiteModel from '../../models/sites';
 import { route } from 'preact-router';
+import Toast from '../../components/toast';
 
 export default class AddEditUserComponent extends Component {
     constructor(props) {
@@ -97,8 +98,8 @@ export default class AddEditUserComponent extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const rowData = this.state.rowData;
         const userDocId = this.props.userDocId;
         this.getSites();
@@ -139,7 +140,7 @@ export default class AddEditUserComponent extends Component {
         const onLine = window.navigator.onLine;
         const isEdit = this.props.isEdit;
         const rowData = this.state.rowData;
-        // if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const user = this.props.user;
         if (!user.isOwner) return;
         const permittedRessources = Array.from(this.state.checkedData.values());
@@ -156,11 +157,13 @@ export default class AddEditUserComponent extends Component {
         const primaryId = this.user.primaryId;
         if (!isEdit) {
             const res = await UsersModel.createUser(dataForFire, primaryId);
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         else {
             const res = await UsersModel.updateUser(dataForFire, primaryId, rowData.ref.id);
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         this.props.isLoading(false);
         this.setState({ isLoading: false });

@@ -5,8 +5,9 @@ import styles from "./style.scss";
 import popup from '../../../../helper/popUp';
 import SiteModel from '../../../../models/sites';
 import AddEditSite from '../../../../components/add-edit-site';
+import Toast from '../../../../components/toast';
 
- export default class Sites extends Component {
+export default class Sites extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,15 +22,15 @@ import AddEditSite from '../../../../components/add-edit-site';
         this.primaryId = this.user.primaryId;
     }
 
-    async getAllSites(){
-        if(!this.primaryId) return;
+    async getAllSites() {
+        if (!this.primaryId) return;
         this.props.isLoading(true);
         const allSites = await SiteModel.getSites(this.primaryId);
-        this.setState({allSites});
+        this.setState({ allSites });
         this.props.isLoading(false);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getAllSites();
     }
 
@@ -45,7 +46,7 @@ import AddEditSite from '../../../../components/add-edit-site';
         }
     }
 
-    
+
     rowClicked(tagName, rowData) {
         if (tagName == "INPUT") return;
         const checkedData = this.state.checkedData;
@@ -62,7 +63,7 @@ import AddEditSite from '../../../../components/add-edit-site';
         </tr>;
     }
 
-    _addNewSite(){
+    _addNewSite() {
         popup(<AddEditSite reflesh={_ => this.getAllSites()} user={this.user} />);
     }
 
@@ -74,7 +75,8 @@ import AddEditSite from '../../../../components/add-edit-site';
         if (!ask) return;
         this.props.isLoading(true);
         const res = await SiteModel.deleteSite(sitesToDelete);
-        alert(res.message);
+        if (res.status !== 200) Toast.create(res.message, { errorMessage: true });
+        else Toast.create(res.message, { successMessage: true });
         this.props.isLoading(false);
         this.getAllSites(site);
         this.setState({ checkedData: new Map() });
@@ -92,7 +94,7 @@ import AddEditSite from '../../../../components/add-edit-site';
 
                 <div className={styles.headerBtns}>
                     <div className={`${styles.tableNavigivationsBtns} ${styles.categoryNavigationsBtn}`}>
-                    <button onClick={_ => this._addNewSite()} >
+                        <button onClick={_ => this._addNewSite()} >
                             Add new
                         </button>
                         <span className={styles.btnSpacing}></span>

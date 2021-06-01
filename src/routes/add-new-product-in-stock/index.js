@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import Form from '../../components/form';
 import Select from '../../components/select-C';
 import TextField from '../../components/text-field';
+import Toast from '../../components/toast';
 import ProductModel from '../../models/products';
 import SalesModel from '../../models/sales';
 import StockModel from '../../models/stock';
@@ -38,7 +39,7 @@ export default class AddNewProductInStock extends Component {
 
     componentDidMount() {
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const listOfRows = this.state.listOfRows;
         listOfRows.push(this.rowFields);
         this.setState({ listOfRows });
@@ -74,11 +75,10 @@ export default class AddNewProductInStock extends Component {
         const value = Number(evt.target.value);
         const name = evt.target.name
         if (name !== "quantity" & name !== "amount") return;
-        if (isNaN(value)) return alert(`Enter a valid ${name.toUpperCase()}`);
+        if (isNaN(value)) return Toast.create(`Enter a valid ${name.toUpperCase()}`, {errorMessage: true});
         const recordedData = this.state.recordedData;
         const uid = this.user.uid;
         const dataForMap = { ...recordedData.get(index), uid };
-        // delete dataForMap.quantity;
         dataForMap[name] = value;
         recordedData.set(index, dataForMap);
         this.setState({ recordedData });
@@ -110,7 +110,7 @@ export default class AddNewProductInStock extends Component {
 
     async submitAllReccorded() {
         const site = this.props.site;
-        if (!site || !this.sites.includes(site)) return alert("Please choose a site!");
+        if (!site || !this.sites.includes(site)) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const recordedData = this.state.recordedData;
         const unDoneProducts = [];
         const productsReady = [];
@@ -126,8 +126,7 @@ export default class AddNewProductInStock extends Component {
                 unDoneProducts.push(value);
             }
             else {
-                if (!value.amount || value.amount == "") return alert(`The amount can not be empty.`)
-
+                if (!value.amount || value.amount == "") return Toast.create(`The amount can not be empty.`, {errorMessage: true});
                 const quantity = Number(value.quantity);
                 const amount = Number(value.amount);
                 const purchaseUnitPrice = amount / quantity;
@@ -136,8 +135,8 @@ export default class AddNewProductInStock extends Component {
             }
 
         }
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         if (productsReady.length == 0) return;
         this.props.isLoading(true);
         const uid = this.user.uid;
@@ -148,14 +147,12 @@ export default class AddNewProductInStock extends Component {
             if (res.status !== 200) {
                 const productDetails = await ProductModel.getSingleProduct(primaryId, site, productReady.productId);
                 const failledProductName = productDetails.productName;
-                alert(`Failled to save ${failledProductName}`);
+                Toast.create(`Failled to save ${failledProductName}`, {errorMessage: true});
             }
         }
         
-        if(failledProducts.length !== 0) alert(`All products was saved eccept ${failledProducts.map(failProd=>`${failProd} ,`)}.`);
-        else alert(`${productsReady.length == 1 ? "Products" : "Product"} saved succefully.`);
-        
-
+        if(failledProducts.length !== 0) Toast.create(`All products was saved eccept ${failledProducts.map(failProd=>`${failProd} ,`)}.`, {errorMessage: true});
+        else Toast.create(`${productsReady.length == 1 ? "Products" : "Product"} saved succefully.`, {errorMessage: true});        
         this.props.isLoading(false);
     }
 

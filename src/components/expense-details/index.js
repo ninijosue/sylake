@@ -6,6 +6,7 @@ import AddNewPurchase from '../addNewPurchase';
 import AddOrEditExpense from '../addOrEditExpense';
 import ListInfoDisplayer from '../list-info-displayer';
 import Loading from '../loading-C';
+import Toast from '../toast';
 import styles from './style.scss';
 
 export default class ExpenseDetails extends Component {
@@ -30,8 +31,8 @@ export default class ExpenseDetails extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         this.getDocumentCreatorInfo()
     }
 

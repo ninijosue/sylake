@@ -32,8 +32,8 @@ export default class Products extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) alert("There is no connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         document.addEventListener("sitechange", evt=>console.log(evt))
         this._getAllProducts(this.props.site);
     }
@@ -52,7 +52,7 @@ export default class Products extends Component {
         if (type == "INPUT") return;
         const site = this.props.site;
         const isInUserSites = this.sites.includes(site);
-        if(!site || !isInUserSites) return alert("No apropriate site selected!");
+        if(!site || !isInUserSites) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const permissions = this.user.isOwner ? allPermission : this.user.permittedRessources;
         if (!permissions.includes("edit product")) return;
         const checkedData = this.state.checkedData;
@@ -78,13 +78,13 @@ export default class Products extends Component {
     _addNewProduct() {
         const site = this.props.site;
         const isInUserSites = this.sites.includes(site);
-        if(!site || !isInUserSites) return alert("No apropriate site selected!");
+        if(!site || !isInUserSites) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         popup(<AddOrEditProduct site={site} user={this.user} refleshData={_ => this.refleshData()} />);
     }
 
     async _deleteProducts() {
         const site = this.props.site;
-        if(!site) return alert("No apropriate site selected!");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const primaryId = this.user.primaryId;
         const productsToDelete = Array.from(this.state.checkedData.values());
         const ask = confirm(`Do you want delete ${productsToDelete.length == 1 ? "this" : "these"} ${productsToDelete.length == 1 ? "product" : "products"}?`);

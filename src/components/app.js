@@ -31,6 +31,7 @@ import defineRouteDest from '../generators/routeVerifier';
 import NotAuthorized from '../routes/not-authaurized';
 import Report from '../routes/report';
 import SiteModel from '../models/sites';
+import Toast from './toast';
 
 export default class App extends Component {
 	constructor() {
@@ -53,8 +54,8 @@ export default class App extends Component {
 	}
 
 	componentDidMount() {
-		// const onLine = window.navigator.onLine;
-		// if (!onLine) return alert("There is no internet connection.");
+		const onLine = window.navigator.onLine;
+		if (!onLine) Toast.create("There is no internet connection. Please check", { errorMessage: true });
 		AppDB.auth().onAuthStateChanged(user => {
 			if (user) {
 				this.setUser(user);
@@ -169,8 +170,8 @@ export default class App extends Component {
 
 
 	toRender() {
-		// const onLine = window.navigator.onLine;
-		// if (!onLine) return alert("There is no internet connection.");
+		const onLine = window.navigator.onLine;
+		if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
 		AppDB.auth().onAuthStateChanged(user => {
 			if (user) {
 				this.state.render = "mainApp";

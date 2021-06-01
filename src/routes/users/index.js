@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import AddOrEditUser from '../../components/add-edit-user';
 import { ColDef, DataTable } from '../../components/data-table';
+import Toast from '../../components/toast';
 import UserDetail from '../../components/user-detail';
 import { allPermission } from '../../generators/routeVerifier';
 import popup from '../../helper/popUp';
@@ -30,8 +31,8 @@ export default class Users extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true})
         this._getAllUsers();
     }
 
@@ -69,7 +70,7 @@ export default class Users extends Component {
             const status = await UsersModel.deleteUser(user);
             if (status !== 200) {
                 this.props.isLoading(false);
-                return alert(`Failled to delete ${user.names}`);
+                return Toast.create(`Failled to delete ${user.names}`, {errorMessage: true});
             };
         }
 

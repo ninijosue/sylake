@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import Form from '../../components/form';
 import Select from '../../components/select-C';
 import TextField from '../../components/text-field';
+import Toast from '../../components/toast';
 import ProductModel from '../../models/products';
 import SalesModel from '../../models/sales';
 import StockModel from '../../models/stock';
@@ -34,8 +35,8 @@ export default class RemoveFromStock extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", { errorMessage: true });
         const listOfRows = this.state.listOfRows;
         listOfRows.push(this.rowFields);
         this.setState({ listOfRows });
@@ -46,7 +47,7 @@ export default class RemoveFromStock extends Component {
         const productName = data.label.toLowerCase();
         const primaryId = this.user.primaryId;
         this.props.isLoading(true);
-        this.setState({isLoading: true});
+        this.setState({ isLoading: true });
         const currentQuantityOfProductInStock = (await StockModel.getProductInStock(productName, primaryId)).quantity;
         let currentQuantity = 0;
         if (currentQuantityOfProductInStock) currentQuantity = currentQuantityOfProductInStock;
@@ -111,7 +112,7 @@ export default class RemoveFromStock extends Component {
             else {
                 const quantity = Number(value.quantity);
                 const stockQuantity = Number(value.currentQuantity);
-                if (quantity > stockQuantity) return alert(`The stock quantity of on product ${key + 1} is not enought to serve the the amounte of product.`);
+                if (quantity > stockQuantity) return Toast.create(`The stock quantity of on product ${key + 1} is not enought to serve the the amounte of product.`, { errorMessage: true });
                 const passedProduct = value;
                 productsReady.push(passedProduct);
             }
@@ -119,11 +120,12 @@ export default class RemoveFromStock extends Component {
 
         }
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", { errorMessage: true });
         this.props.isLoading(true);
         const primaryId = this.user.primaryId;
         const res = await StockModel.removeProductFromStock(productsReady, primaryId);
-        alert(res.message);
+        if (res.status !== 200) Toast.create(res.message, { errorMessage: true });
+        else Toast.create(res.message, { successMessage: true });
         this.props.isLoading(false);
     }
 
@@ -133,9 +135,9 @@ export default class RemoveFromStock extends Component {
         return (
             <>
                 <div className={styles.newSalesFormContainerFluid}>
-                <div className={styles.formHeader}>
-                    <h2>Remove from stock</h2>
-                        <button onClick={_=> this.setState({listOfRows: [], recordedData: new Map()})} className={styles.cleanBtn}>
+                    <div className={styles.formHeader}>
+                        <h2>Remove from stock</h2>
+                        <button onClick={_ => this.setState({ listOfRows: [], recordedData: new Map() })} className={styles.cleanBtn}>
                             <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24" /></g><g><path d="M16,11h-1V3c0-1.1-0.9-2-2-2h-2C9.9,1,9,1.9,9,3v8H8c-2.76,0-5,2.24-5,5v7h18v-7C21,13.24,18.76,11,16,11z M19,21h-2v-3 c0-0.55-0.45-1-1-1s-1,0.45-1,1v3h-2v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3H9v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3H5v-5 c0-1.65,1.35-3,3-3h8c1.65,0,3,1.35,3,3V21z" /></g></svg>
                         </button>
                     </div>

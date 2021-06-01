@@ -6,6 +6,7 @@ import TextField from '../text-field';
 import styles from "./style.scss";
 import closePopup from '../../helper/closePopUp';
 import ExpenseModel from '../../models/expense';
+import Toast from '../toast';
 
 export default class AddEditExpenseCategory extends Component {
     constructor(props) {
@@ -35,7 +36,7 @@ export default class AddEditExpenseCategory extends Component {
 
     async formSubmition(formData) {
         const site = this.props.site;
-        if(!site) return alert("Please choose a site!");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const categoryName = formData.categoryName;
         if(!categoryName || categoryName == "") return;
         const data = {
@@ -52,12 +53,14 @@ export default class AddEditExpenseCategory extends Component {
                 ref: this.rowData.ref
             }
             const res = await ExpenseModel.updateExpenseCategory(dataForModel);
-            alert(res.message)
+            if(res.status !== 200 ) Toast.create(res.message, {errorMessage: true})
+            else Toast.create(res.message, {successMessage: true})
         }
         else{
             if(!this.primaryId) return;
             const res = await ExpenseModel.addNewCategory(data, this.primaryId, site)
-            alert(res.message);
+            if(res.status !== 200 ) Toast.create(res.message, {errorMessage: true})
+            else Toast.create(res.message, {successMessage: true})
         }
             this.setState({isLoading: false});
             this.props.reflesh()

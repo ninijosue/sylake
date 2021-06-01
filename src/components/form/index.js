@@ -1,12 +1,13 @@
 import { Component, createRef } from "preact";
+import Toast from "../toast";
 export default class Form extends Component {
     state = {
         value: {}
     };
     ref = createRef();
     componentDidMount(){
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         if (this.ref.current){
             Array.from(this.ref.current.elements).forEach(elt=>{
                 elt.oninput = (evt)=>this.updateFormValue(evt);

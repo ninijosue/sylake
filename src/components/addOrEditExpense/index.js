@@ -5,6 +5,7 @@ import Form from '../form';
 import Loading from '../loading-C';
 import Select from '../select-C';
 import TextField from '../text-field';
+import Toast from '../toast';
 import styles from "./style.scss";
 export default class AddOrEditExpense extends Component {
     constructor(props) {
@@ -28,8 +29,8 @@ export default class AddOrEditExpense extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const rowData = this.props.rowData;
         const expenseName = this.expenseName.current.base.querySelector("input");
         expenseName.value = rowData ? rowData.expenseName : "";
@@ -49,9 +50,9 @@ export default class AddOrEditExpense extends Component {
 
     async formSubmition(data) {
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const site = this.props.site;
-        if(!site) return alert("There is no site selected!");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         let price = Number(data.price);
         if(isNaN(price)) price = 0;
         const rowData = this.props.rowData;
@@ -67,7 +68,8 @@ export default class AddOrEditExpense extends Component {
         this.setState({ isLoading: true });
         if (!rowData) {
             const res = await ExpenseModel.addNewExpense(dataForFire, primaryId, site);
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         else {
             const expenseCategory = data.expenseCategory == "" ? rowData.expenseCategory ? rowData.expenseCategory: ""  : data.expenseCategory;
@@ -78,7 +80,8 @@ export default class AddOrEditExpense extends Component {
                 updatedBy: this.user.uid,
             }
             const res = await ExpenseModel.updateExpense(dataToUpdate);
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         this.setState({ isLoading: false });
         this.props.reflesh();

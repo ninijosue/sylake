@@ -5,6 +5,7 @@ import PurchaseLogsModel from '../../models/purchase-logs';
 import Form from '../form';
 import Loading from '../loading-C';
 import TextField from '../text-field';
+import Toast from '../toast';
 import styles from "./style.scss";
 export default class EditPurchasedProduct extends Component {
     constructor(props) {
@@ -20,8 +21,8 @@ export default class EditPurchasedProduct extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine)  Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const rowData = this.props.rowData;
         const productName = this.productName.current.base.querySelector("input");
         productName.value = rowData ? rowData.productName : "";
@@ -40,12 +41,12 @@ export default class EditPurchasedProduct extends Component {
     async _formSubmition(data) {
         const site = this.props.site;
         if (!site) {
-            alert("Please choose a site!");
+            Toast.create("There is no site selected. Please check!", {errorMessage: true});
             closePopup();
             return;
         };
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const amount = Number(data.amount);
         const quantity = Number(data.quantity);
         if (!amount || !quantity) return;
@@ -69,7 +70,8 @@ export default class EditPurchasedProduct extends Component {
             previewAmount
         }
         const res = await PurchaseLogsModel.updatePurchasedProduct(dataToUpdate, primaryId, site);
-        alert(res.message);
+        if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+        else Toast.create(res.message, {successMessage: true});
         this.setState({ isLoading: false });
         this.props.refleshData();
         closePopup();

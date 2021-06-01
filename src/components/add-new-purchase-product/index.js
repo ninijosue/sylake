@@ -4,6 +4,7 @@ import ProductModel from '../../models/products';
 import Form from '../form';
 import Loading from '../loading-C';
 import TextField from '../text-field';
+import Toast from '../toast';
 import styles from "./style.scss";
 export default class AddOrEditNewPurchaseProduct extends Component {
     constructor() {
@@ -17,8 +18,8 @@ export default class AddOrEditNewPurchaseProduct extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine)  Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const rowData = this.props.rowData;
         const productName = this.productName.current.base.querySelector("input");
         productName.value = rowData ? rowData.productName : "";
@@ -35,12 +36,13 @@ export default class AddOrEditNewPurchaseProduct extends Component {
 
     async _formSubmition(data) {
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const rowData = this.props.rowData;
         this.setState({ isLoading: true });
         if (!rowData) {
             const res = await ProductModel.addProductToPurchase(data);
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         else{
             const dataToUpdate = {

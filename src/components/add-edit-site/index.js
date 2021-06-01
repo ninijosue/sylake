@@ -6,6 +6,7 @@ import TextField from '../text-field';
 import styles from "./style.scss";
 import closePopup from '../../helper/closePopUp';
 import SiteModel from '../../models/sites';
+import Toast from '../toast';
 
 export default class AddEditSite extends Component {
     constructor(props) {
@@ -50,12 +51,14 @@ export default class AddEditSite extends Component {
                 ref: this.rowData.ref
             }
             const res = await SiteModel.updateSite(dataForModel);
-            alert(res.message)
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+            else Toast.create(res.message, {successMessage: true});
         }
         else{
             if(!this.primaryId) return;
             const res = await SiteModel.addNewSite(data, this.primaryId)
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+            else Toast.create(res.message, {successMessage: true});
         }
             this.setState({isLoading: false});
             this.props.reflesh()

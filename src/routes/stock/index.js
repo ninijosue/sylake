@@ -10,6 +10,7 @@ import styles from "./style";
 import FilterByDateFields from '../../components/filter-by-date-fields/index';
 import { searchIcon } from '../../assets/icons/icons';
 import { allPermission } from '../../generators/routeVerifier';
+import Toast from '../../components/toast';
 
 export default class Stock extends Component {
     constructor(props) {
@@ -27,9 +28,9 @@ export default class Stock extends Component {
     }
 
     async _getAllPuchases(site) {
-        const siteName =  this.props.site || site;
+        const siteName = this.props.site || site;
         const didIncludeInUserSites = this.sites.includes(siteName);
-        if(!siteName || !didIncludeInUserSites) return;
+        if (!siteName || !didIncludeInUserSites) return;
         this.props.isLoading(true);
         const primaryId = this.user.primaryId;
         const allPurchases = await StockModel.getAllGoodsInStock(primaryId, siteName);
@@ -38,20 +39,20 @@ export default class Stock extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", { errorMessage: true })
         this._getAllPuchases();
     }
     componentDidUpdate(prevProps) {
         const prevSite = prevProps.site;
         const nextSite = this.props.site;
-        if(prevSite !== nextSite) this._getAllPuchases(nextSite);
+        if (prevSite !== nextSite) this._getAllPuchases(nextSite);
     }
 
     rowClicked(type, rowData) {
         if (type == "INPUT") return;
         const permissions = this.user.isOwner ? allPermission : this.user.permittedRessources;
-        if(!permissions.includes("stock") ) return;
+        if (!permissions.includes("stock")) return;
         const checkedData = this.state.checkedData;
         checkedData.clear();
         this.setState({ rowData, checkedData });
@@ -84,7 +85,8 @@ export default class Stock extends Component {
         if (!ask) return;
         this.props.isLoading(true);
         const res = await StockModel.deleteProductFromStock(productsToDelete);
-        alert(res.message);
+        if (res.status !== 200) Toast.create(res.message, { errorMessage: true });
+        else Toast.create(res.message, { successMessage: true });
         this.props.isLoading(false);
         await this._getAllPuchases();
         this.setState({ checkedData: new Map() });
@@ -97,7 +99,7 @@ export default class Stock extends Component {
             <td>
                 {/* <input checked={this.state.checkedData.has(rowData.ref.id)} onChange={evt => this._onCheck(evt, rowData)} type="checkbox" /> */}
                 {index + 1}
-                </td>
+            </td>
             <td>{row.productName.toUpperCase()}</td>
             <td>{row.quantity.toLocaleString()}</td>
             <td>{row.unitPrice.toLocaleString()}</td>
@@ -105,7 +107,7 @@ export default class Stock extends Component {
         </tr>;
     }
 
-    
+
 
     footDef(res) {
         return <tr>

@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { choosenDate } from '../../helper/utils';
 import ReportModel from '../../models/report';
 import { ColDef, DataTable } from '../data-table';
+import Toast from '../toast';
 import styles from "./style.scss";
 
 class CurrentAccountOfStock extends Component {
@@ -17,7 +18,7 @@ class CurrentAccountOfStock extends Component {
     }
 
     async stockReport(site, date) {
-        if(!site) return alert("There is no site selected!");
+        if(!site) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const isSiteIncludedInUserSites = this.sites.includes(site);
         if(!isSiteIncludedInUserSites) return;
         this.props.isLoading(true);

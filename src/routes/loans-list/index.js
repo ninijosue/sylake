@@ -8,6 +8,7 @@ import { route } from 'preact-router';
 import { verifiedIcon } from '../../assets/icons/icons';
 import PayLoanAMount from '../../components/pay-loan-mount';
 import { allPermission } from '../../generators/routeVerifier';
+import Toast from '../../components/toast';
 
 export default class LoansList extends Component {
     constructor(props) {
@@ -34,8 +35,8 @@ export default class LoansList extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", { errorMessage: true })
         this._getAllLoans(this.props.site);
     }
     componentDidUpdate(prevProps) {
@@ -79,7 +80,8 @@ export default class LoansList extends Component {
         const loansToDetele = data.map(d => { if (!d.isPaied) return d });
         this.props.isLoading(true);
         const res = await LoansModel.deleteLoans(primaryId, loansToDetele, site);
-        alert(res.message);
+        if (res.status !== 200) Toast.create(res.message, { errorMessage: true });
+        else Toast.create(res.message, { successMessage: true });
         this.setState({ checkedData: new Map() });
         this.props.isLoading(false);
         this._getAllLoans(site);

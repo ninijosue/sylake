@@ -5,6 +5,7 @@ import { allPermission } from '../../generators/routeVerifier';
 import popup from '../../helper/popUp';
 import LoansModel from '../../models/loans';
 import { ColDef, DataTable } from '../data-table';
+import Toast from '../toast';
 import UpdateLoanProduct from '../update-loan-product';
 import styles from "./style.scss";
 export default class CustomerLoanProducts extends Component {
@@ -59,7 +60,7 @@ export default class CustomerLoanProducts extends Component {
 
     rowClicked(evt, rowData, isPaied) {
         const site = this.props.site;
-        if(!site) return alert("There not site selected!");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         if(isPaied) return;
         if (evt.target.tagName == "INPUT") return;
         const permissions = this.user.isOwner ? allPermission : this.user.permittedRessources;
@@ -108,7 +109,8 @@ export default class CustomerLoanProducts extends Component {
         if (!ask) return;
         this.props.isLoading(true);
         const res = await LoansModel.deleteLoanProducts(primaryId, checkedData, site);
-        alert(res.message);
+        if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+        else Toast.create(res.message, {successMessage: true});
         const products = await LoansModel.getSpesificLoanproducts(primaryId, this.loanId, site);
         this.props.isLoading(false);
         if (products.length == 0) {

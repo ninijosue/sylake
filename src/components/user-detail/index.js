@@ -8,6 +8,7 @@ import { closeIcon } from '../../assets/icons/icons';
 import { route } from 'preact-router';
 import closePopup from '../../helper/closePopUp';
 import { allPermission } from '../../generators/routeVerifier';
+import Toast from '../toast';
 export default class UserDetail extends Component {
 
     constructor(props) {
@@ -32,7 +33,8 @@ export default class UserDetail extends Component {
         const email = this.props.rowData.email;
         this.setState({ isLoading: true });
         const res = await UsersModel.sendLinkToResetPassword(email);
-        alert(res.message)
+        if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+        else Toast.create(res.message, {successMessage: true});
         this.setState({ isLoading: false });
     }
 
@@ -55,7 +57,7 @@ export default class UserDetail extends Component {
         }
         this.setState({ isLoading: true });
         const res = await UsersModel.removeRessources(docRef, remainRessources)
-        if (res.status !== 200) alert(res.message);
+        if (res.status !== 200) Toast.create(res.message, {errorMessage: true});
         else this.setState({ permittedRessources: remainRessources });
         this.setState({ isLoading: false });
         this.props.reflesh();

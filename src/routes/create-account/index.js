@@ -5,6 +5,7 @@ import Button from '../../components/Button';
 import CircularLoading from '../../components/circular-loadding';
 import Form from '../../components/form';
 import TextField from '../../components/text-field';
+import Toast from '../../components/toast';
 import UsersModel from '../../models/users';
 import styles from "./style.scss";
 
@@ -46,7 +47,7 @@ export default class CreateAccount extends Component {
         const confirmPassword = formData.confirmPassword;
         if (!names | !email | !birthDay | !password) return;
         const data = { names, email, birthDay, password };
-        if (password !== confirmPassword) return alert("Password didn't match. Please check!");
+        if (password !== confirmPassword) return Toast.create("Password didn't match. Please check!", {errorMessage: true});
         this.setState({ currentView: "productsDefine" });
 
     }
@@ -207,7 +208,7 @@ export default class CreateAccount extends Component {
         this.setState({ isLoading: true });
         const res = await UsersModel.createAccount(data);
         if (res.status !== 200) {
-            alert(res.message)
+            Toast.create("Account creation failled. Please try again!", {errorMessage: true})
             this.setState({ isLoading: false, currentView: "info" });
         }
         else route("/");

@@ -7,6 +7,7 @@ import styles from "./style.scss";
 import ExpenseModel from '../../../../models/expense';
 import popup from '../../../../helper/popUp';
 import AddEditExpenseCategory from '../../../../components/add-edit-expenseCategory';
+import Toast from '../../../../components/toast';
 
 class ExpenseCategories extends Component {
     constructor(props) {
@@ -24,23 +25,23 @@ class ExpenseCategories extends Component {
         this.sites = this.user.sites;;
     }
 
-    async getCategories(site){
+    async getCategories(site) {
         const didIncludeInUserSites = this.sites.includes(site);
-        if(!site || !didIncludeInUserSites) return;
-        if(!this.primaryId) return;
+        if (!site || !didIncludeInUserSites) return;
+        if (!this.primaryId) return;
         this.props.isLoading(true);
         const allCategories = await ExpenseModel.getExpenseCategories(this.primaryId, site);
-        this.setState({allCategories});
+        this.setState({ allCategories });
         this.props.isLoading(false);
     }
 
     componentDidUpdate(prevProps) {
         const prevSite = prevProps.site;
         const nextSite = this.props.site;
-        if(prevSite !== nextSite) this.getCategories(nextSite);
+        if (prevSite !== nextSite) this.getCategories(nextSite);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getCategories(this.props.site);
     }
 
@@ -56,11 +57,11 @@ class ExpenseCategories extends Component {
         }
     }
 
-    
+
     rowClicked(tagName, rowData) {
         if (tagName == "INPUT") return;
         const site = this.props.site;
-        if(!site) return alert("There is no site selected!");
+        if (!site) return Toast.create("There is no site selected. Please check!", { errorMessage: true });
         const checkedData = this.state.checkedData;
         checkedData.clear();
         this.setState({ rowData, checkedData });
@@ -75,9 +76,9 @@ class ExpenseCategories extends Component {
         </tr>;
     }
 
-    _addNewCategory(){
+    _addNewCategory() {
         const site = this.props.site;
-        if(!site) return alert("There is no site selected!");
+        if (!site) return Toast.create("There is no site selected. Please check!", { errorMessage: true });
         popup(<AddEditExpenseCategory site={(site)} reflesh={_ => this.getCategories(site)} user={this.user} />);
     }
 
@@ -89,7 +90,8 @@ class ExpenseCategories extends Component {
         if (!ask) return;
         this.props.isLoading(true);
         const res = await ExpenseModel.deleteExpenseCategories(categoriesToDelete);
-        alert(res.message);
+        if (res.status !== 200) Toast.create(res.message, { errorMessage: true });
+        else Toast.create(res.message, { successMessage: true });
         this.props.isLoading(false);
         this.getCategories(site);
         this.setState({ checkedData: new Map() });
@@ -108,7 +110,7 @@ class ExpenseCategories extends Component {
 
                 <div className={styles.headerBtns}>
                     <div className={`${styles.tableNavigivationsBtns} ${styles.categoryNavigationsBtn}`}>
-                    <button onClick={_ => this._addNewCategory()} >
+                        <button onClick={_ => this._addNewCategory()} >
                             Add new
                         </button>
                         <span className={styles.btnSpacing}></span>

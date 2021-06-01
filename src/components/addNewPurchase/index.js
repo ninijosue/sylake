@@ -6,6 +6,7 @@ import Form from '../form';
 import Loading from '../loading-C';
 import Select from '../select-C';
 import TextField from '../text-field';
+import Toast from '../toast';
 import styles from "./style.scss";
 export default class AddNewPurchase extends Component {
     constructor() {
@@ -26,8 +27,8 @@ export default class AddNewPurchase extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine)  Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         this.getListOfPurchaseProducts();
         const rowData = this.props.rowData;
         const productName = this.productName.current.base.querySelector("input");
@@ -51,7 +52,7 @@ export default class AddNewPurchase extends Component {
 
     async _formSubmition(data){
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const rowData = this.props.rowData;
         const dataForModel ={
             ...data,
@@ -62,7 +63,8 @@ export default class AddNewPurchase extends Component {
 
         if(!rowData){
             const res = await PurchaseModel.addNewPurchase(dataForModel);
-             alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+            else Toast.create(res.message, {successMessage: true});
         }
         else{
             const productData = {
@@ -71,7 +73,8 @@ export default class AddNewPurchase extends Component {
                 productId: data.productId == "" ? rowData.productId : data.productId
             }
             const res = await PurchaseModel.updatePurchasedProduct(productData);
-             alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         
         this.setState({isLoading: false});

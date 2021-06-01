@@ -1,3 +1,4 @@
+import Toast from "../../components/toast";
 import { AppDB, AppFirestore } from "../../db";
 import { getRandomString } from "../../helper/utils";
 
@@ -99,7 +100,6 @@ export default class UsersModel {
             }
 
         } catch (error) {
-            // alert("User not found");
             await AppDB.auth().signOut();
             return {
                 status: 500,
@@ -117,7 +117,7 @@ export default class UsersModel {
             const docData = { ...doc.data(), ref: doc.ref };
             return docData;
         } catch (error) {
-            alert("User not found");
+            Toast.create("User not found!", {errorMessage: true})
             return undefined
         }
     }

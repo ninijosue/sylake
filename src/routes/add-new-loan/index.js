@@ -9,6 +9,7 @@ import Select from '../../components/select-C';
 import TextField from '../../components/text-field';
 import LoansModel from '../../models/loans';
 import SalesModel from '../../models/sales';
+import Toast from '../../components/toast';
 
 export default class AddNewLoan extends Component {
     constructor(props) {
@@ -46,11 +47,8 @@ export default class AddNewLoan extends Component {
     }
 
     componentDidMount() {
-        // document.addEventListener("sitechange", evt=>{
-        //     console.log("site changed", evt.detail);
-        //  })
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const listOfRows = this.state.listOfRows;
         listOfRows.push(this.rowFields);
         this.setState({ listOfRows });
@@ -68,7 +66,7 @@ export default class AddNewLoan extends Component {
 
     async setSelectedProduct(data, index) {
         const site = this.props.site;
-        if(!site) return alert("Please choose a site!");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const productName = data.label.toLowerCase();
         const primaryId = this.user.primaryId;
         const products = this.state.products;
@@ -182,7 +180,7 @@ export default class AddNewLoan extends Component {
 
     async submitAllReccorded() {
         const site = this.props.site;
-        if(!site) return alert("Please choose a site");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const recordedData = new Map();
         const recordedDataInState = this.state.recordedData;
         const unDoneProducts = [];
@@ -230,13 +228,14 @@ export default class AddNewLoan extends Component {
                 if (productsDefine == "default") {
                     if (!productInStock) {
                         this.props.isLoading(false);
-                        return alert(`There is a problem on product number ${value.productName.toUpperCase()} please verify and try again.`);
+                        return Toast.create(`There is a problem on product number ${value.productName.toUpperCase()} please verify and try again.`, {errorMessage: true})
+                        
                     }
                     const quantity = Number(value.quantity);
                     const stockQuantity = Number(productInStock.quantity);
                     if (quantity > stockQuantity) {
                         this.props.isLoading(false);
-                        return alert(`The stock quantity for product (${value.productName.toUpperCase()}) is not enought to serve the the amounte of product.`);
+                        return Toast.create(`The stock quantity for product (${value.productName.toUpperCase()}) is not enought to serve the the amount of product.`, {errorMessage: true})
                     }
                     const passedProduct = value;
                     productsReady.push(passedProduct);
@@ -248,13 +247,13 @@ export default class AddNewLoan extends Component {
                     else if (productRole == "both") {
                         if (!productInStock) {
                             this.props.isLoading(false);
-                            return alert(`There is a problem on product number ${value.productName.toUpperCase()} please verify and try again.`);
+                            return Toast.create(`There is a problem on product number ${value.productName.toUpperCase()} please verify and try again.`, {errorMessage: true});
                         }
                         const quantity = Number(value.quantity);
                         const stockQuantity = Number(productInStock.quantity);
                         if (quantity > stockQuantity) {
                             this.props.isLoading(false);
-                            return alert(`The stock quantity for product (${value.productName.toUpperCase()}) is not enought to serve the the amounte of product.`);
+                            return Toast.create(`The stock quantity for product (${value.productName.toUpperCase()}) is not enought to serve the the amounte of product.`, {errorMessage: true})
                         }
                         const passedProduct = value;
                         productsWithRoleOfBoth.push(passedProduct);
@@ -267,24 +266,23 @@ export default class AddNewLoan extends Component {
         }
         this.props.isLoading(false);
         const onLine = window.navigator.onLine;
-        if (!onLine) return alert("There is no internet connection.");
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         this.props.isLoading(true);
         const primaryId = this.user.primaryId;
         const productsDefine = this.user.productsDefine;
         const loanDetails = this.state.formData;
         if (productsDefine == "default") {
             const res = await LoansModel.addNewLoanWhenDefinedAsDefault(productsReady, primaryId, loanDetails, this.user, site);
-            alert(res.message);
+            if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+           else Toast.create(res.message, {successMessage: true});
         }
         else {
-            try {
                 const res = await LoansModel
                     .addNewLoanWhenProductsDefineIsCustomProductRoleNotBoth(productsWithRoleOfSales, primaryId, loanDetails, this.user, site);
                 await SalesModel.addNewLoanWhenDefinedAsDefault(productsWithRoleOfBoth, primaryId, loanDetails, this.user, site);
-                alert(res.message)
-            } catch (error) {
-                alert("Failled to save product(s)");
-            }
+                if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+                else Toast.create(res.message, {successMessage: true});
+           
 
         }
         this.props.isLoading(false);

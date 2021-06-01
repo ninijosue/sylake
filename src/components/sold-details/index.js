@@ -4,6 +4,7 @@ import UsersModel from '../../models/users';
 import EditSoldProduct from '../edit-sold-product';
 import ListInfoDisplayer from '../list-info-displayer';
 import Loading from '../loading-C';
+import Toast from '../toast';
 import styles from './style.scss';
 
 export default class SoldDetails extends Component {
@@ -41,8 +42,8 @@ export default class SoldDetails extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         this.getDocumentCreatorInfo();
         const updatedBy = this.props.rowData.updatedBy;
         if (updatedBy && updatedBy !== "") this.getDocUpdator();
@@ -50,7 +51,7 @@ export default class SoldDetails extends Component {
 
     _editSold(){
         const site = this.props.site;
-        if(!site) return alert("Choose site please!");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         this.setState({ currentview: "editSold" });
     }
 

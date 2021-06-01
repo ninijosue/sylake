@@ -6,6 +6,7 @@ import Loading from '../loading-C';
 import TextField from '../text-field';
 import styles from "./style.scss";
 import closePopup from '../../helper/closePopUp';
+import Toast from '../toast';
 
 export default class CustomerLoanDetails extends Component {
     constructor(props) {
@@ -42,7 +43,7 @@ export default class CustomerLoanDetails extends Component {
 
     async formSubmition(formData) {
         const site = this.props.site;
-        if(!site) return alert("There is no site selected");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const data = {
             ...formData,
             doneBy: {
@@ -59,8 +60,9 @@ export default class CustomerLoanDetails extends Component {
             this.setState({isLoading: true});
             const res = await LoansModel.updateLoanDetails(docRef, data );
             this.setState({isLoading: false});
-            alert(res.message);
-            this.props.reflesh()
+            if(res.status !== 200 ) Toast.create(res.message, {errorMessage: true});
+            else Toast.create(res.message, {successMessage: true});
+            this.props.reflesh();
             closePopup();
 
         }

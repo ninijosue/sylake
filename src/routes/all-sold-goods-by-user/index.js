@@ -4,6 +4,7 @@ import { searchIcon } from '../../assets/icons/icons';
 import { ColDef, DataTable } from '../../components/data-table';
 import FilterByDateFields from '../../components/filter-by-date-fields';
 import SoldDetails from '../../components/sold-details';
+import Toast from '../../components/toast';
 import { allPermission } from '../../generators/routeVerifier';
 import popup from '../../helper/popUp';
 import SalesModel from '../../models/sales';
@@ -34,8 +35,8 @@ export default class AllSoldProductsDoneByUser extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         this._getAllSales();
     }
 

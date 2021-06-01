@@ -11,6 +11,7 @@ import { allPermission } from '../../../../generators/routeVerifier';
 import popup from '../../../../helper/popUp';
 import ExpenseDetails from '../../../../components/expense-details/index';
 import { Snackbar } from '@material-ui/core';
+import Toast from '../../../../components/toast';
 
 export default class ActualExpenses extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ export default class ActualExpenses extends Component {
 
     async _getAllExpenses(site) {
         const didIncludeInUserSites = this.sites.includes(site);
-        if(!site || !didIncludeInUserSites) return;
+        if (!site || !didIncludeInUserSites) return;
         const primaryId = this.user.primaryId;
         this.props.isLoading(true);
         const allExpenses = await ExpenseModel.getAllExpenses(primaryId, site);
@@ -40,21 +41,21 @@ export default class ActualExpenses extends Component {
     }
 
     componentDidMount() {
-        // const onLine = window.navigator.onLine;
-        // if (!onLine) return alert("There is no internet connection.");
+        const onLine = window.navigator.onLine;
+        if (!onLine) Toast.create("There is no internet connection. Please check!", { errorMessage: true });
         this._getAllExpenses(this.props.site);
     }
 
     componentDidUpdate(prevProps) {
         const prevSite = prevProps.site;
         const nextSite = this.props.site;
-        if(prevSite !== nextSite) this._getAllExpenses(nextSite);
+        if (prevSite !== nextSite) this._getAllExpenses(nextSite);
     }
 
     rowClicked(type, rowData) {
         if (type == "INPUT") return;
         const site = this.props.site;
-        if(!site) return alert("There is no site selected!");
+        if (!site) return Toast.create("There is no site selected. Please check!", { errorMessage: true });
         const checkedData = this.state.checkedData;
         checkedData.clear();
         this.setState({ rowData, checkedData });
@@ -80,7 +81,7 @@ export default class ActualExpenses extends Component {
 
     _addExpense() {
         const site = this.props.site;
-        if(!site) return alert("There is no site selected.");
+        if (!site) Toast.create("There is no site selected. Please check!", { errorMessage: true });
         popup(<AddOrEditExpense site={(this.props.site)} user={this.user} reflesh={_ => this.reflesh()} />);
     }
 
@@ -92,7 +93,8 @@ export default class ActualExpenses extends Component {
         if (!ask) return;
         this.props.isLoading(true);
         const res = await ExpenseModel.deleteExpense(expensesToDelete);
-        alert(res.message);
+        if (res.status !== 200) Toast.create(res.message, { errorMessage: true });
+        else Toast.create(res.message, { successMessage: true });
         this.props.isLoading(false);
         await this._getAllExpenses(site);
         this.setState({ checkedData: new Map() });
@@ -154,7 +156,7 @@ export default class ActualExpenses extends Component {
                 {/* <div className={styles.tableTitle}>
                     <h2>Expenses</h2>
                 </div> */}
-             
+
                 <div className={styles.headerBtns}>
                     <div className={`${styles.tableNavigivationsBtns} ${styles.categoryNavigationsBtn}`}>
                         {

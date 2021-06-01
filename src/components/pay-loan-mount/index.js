@@ -5,6 +5,7 @@ import Button from '../Button';
 import Form from '../form';
 import Loading from '../loading-C';
 import TextField from '../text-field';
+import Toast from '../toast';
 import styles from './style.scss';
 
 class PayLoanAMount extends Component {
@@ -24,12 +25,12 @@ class PayLoanAMount extends Component {
 
     async formSubmition(data) {
         const site = this.props.site;
-        if(!site) return alert("There is no site selected");
+        if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const amount = Number(data.amount);
         const remaingAmount = this.props.remaingAmount;
         const paiedAmountbefore = this.props.paiedAmount;
         const docRef = this.props.docRef;
-        if (amount > remaingAmount) return alert("The amount is to much compair with the amount to pay. Please check!");
+        if (amount > remaingAmount) return Toast.create("The amount is to much compair with the amount to pay. Please check!", {errorMessage: true});
         const ask = confirm(`You are about to pay the loan make sure that the amount which is (${amount}) to pay is as expected and continue.`);
         if (!ask) return;
         const paiedAmount = Number(paiedAmountbefore) + amount;
@@ -38,7 +39,8 @@ class PayLoanAMount extends Component {
         this.setState({isLoading: true})
         const res = await LoansModel.addPaymentOfLoan(docRef, dataForModel, site);
         this.setState({isLoading: false})
-        alert(res.message);
+        if(res.status !== 200) Toast.create(res.message, {errorMessage: true});
+        else Toast.create(res.message, {successMessage: true});
         this.props.reflesh();
         closePopup();
     }
