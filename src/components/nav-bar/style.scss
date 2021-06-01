@@ -1,184 +1,188 @@
 .navContainerFluid {
-    height: 100vh;
-    width: var(--nav-width);
-    background: var(var(--soft-white));
-    display: inline-block;
+  height: 100vh;
+  width: var(--nav-width);
+  background: var(var(--soft-white));
+  position: relative;
+  transition: 0.3s ease;
+  display: flex;
+  justify-content: center;
+
+  .navigationPositioning {
+    position: absolute;
+    height: calc(100vh - 63px);
+    width: calc(var(--nav-width) - 23px);
+    bottom: 0;
+    box-shadow: -2px 5px 21px 0 #00000024;
+    border-radius: 17px;
+    padding: 24px;
+  }
+
+  .navButtonToogle {
+    position: absolute;
+    top: 14px;
+    left: 15px;
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    fill: var(--hovered-color);
+    outline-color: var(--light-main-color);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+
+    svg {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .container {
     position: relative;
-    transition: .3s ease;
+    height: 100%;
+    display: flex;
+    justify-content: center;
 
-    .navigationPositioning {
-        position: absolute;
-        height: calc(100vh - 63px);
-        width: var(--nav-width);
-        bottom: 0;
-    }
+    ul {
+      margin: 0;
+      list-style: none;
+      padding: 0;
+      display: inline-block;
+      right: 0;
 
-    .navButtonToogle {
-        position: absolute;
-        top: 14px;
-        left: 15px;
-        border: none;
-        background: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 2px;
-        fill: var(--hovered-color);
-        outline-color: var(--light-main-color);
-        cursor: pointer;
-        opacity: 0;
-        pointer-events: none;
+      li {
+        margin: 2px 0;
 
-        svg {
-            width: 35px;
-            height: 35px;
-        }
-    }
+        .navBtn {
+          display: flex;
+          align-items: center;
+          fill: var(--light-main-color);
+          color: var(--light-main-color);
+          border: none;
+          background: none;
+          cursor: pointer;
+          width: calc(var(--nav-width) - 47px);
+          height: 39px;
+          padding-left: 17px;
+          transition: 0.5s ease;
+          outline-color: var(--input-border-color);
+          border-radius: 4px;
 
-    .container {
-        position: relative;
-        height: 100%;
-        display: flex;
-        justify-content: center;
+          svg {
+            width: 23px;
+            height: 23px;
+          }
 
-        ul {
-            margin: 0;
-            list-style: none;
-            padding: 0;
-            display: inline-block;
-            right: 0;
+          a {
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            outline-color: var(--input-border-color);
+            font-family: var(--default-font-familly);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+          }
 
-            li {
-                margin: 2px 0;
-
-                .navBtn {
-                    display: flex;
-                    align-items: center;
-                    fill: var(--light-main-color);
-                    color: var(--light-main-color);
-                    border: none;
-                    background: none;
-                    cursor: pointer;
-                    width: calc(var(--nav-width) - 47px);
-                    height: 39px;
-                    padding-left: 17px;
-                    transition: .5s ease;
-                    outline-color: var(--input-border-color);
-                    border-radius: 4px;
-
-
-                    svg {
-                        width: 23px;
-                        height: 23px;
-                    }
-
-                    a {
-                        font-size: 11px;
-                        font-weight: 400;
-                        letter-spacing: 0.5px;
-                        text-decoration: none;
-                        outline-color: var(--input-border-color);
-                        font-family: var(--default-font-familly);
-                        font-weight: 500;
-                        letter-spacing: 0.5px;
-                    }
-
-                    span {
-                        width: 20px;
-                    }
-
-
-                }
-
-                a {
-                    text-decoration: none;
-                    outline-color: var(--input-border-color);
-
-                }
-
-                .navBtn:hover {
-                    background: var(--secondary-color);
-                    box-shadow: 0 0 19px -10px var(--secondary-color);
-                    transition: .5s ease;
-                    fill: var(--white-color);
-                    color: var(--white-color);
-
-                }
-            }
-
+          span {
+            width: 20px;
+          }
         }
 
+        a {
+          text-decoration: none;
+          outline-color: var(--input-border-color);
+        }
 
+        .navBtn:hover {
+          background: var(--secondary-color);
+          box-shadow: 0 0 19px -10px var(--secondary-color);
+          transition: 0.5s ease;
+          fill: var(--white-color);
+          color: var(--white-color);
+        }
+      }
     }
+  }
 }
 
 .active {
-    background: var(--secondary-color);
-    box-shadow: 0 0 19px -12px var(--secondary-color);
-    border-radius: 4px;
-    display: block;
+  background: var(--secondary-color);
+  box-shadow: 0 0 19px -12px var(--secondary-color);
+  border-radius: 4px;
+  display: block;
 
-    button {
-        fill: var(--white-color) !important;
-        color: var(--white-color) !important;
-    }
-
+  button {
+    fill: var(--white-color) !important;
+    color: var(--white-color) !important;
+  }
 }
 
 .showNav {
-    transform: translateX(0) !important;
-    transition: .3s ease;
+  transform: translateX(0) !important;
+  transition: 0.3s ease;
 }
 
 .MuiButtonBase-root:disabled {
-    cursor: not-allowed;
-    pointer-events: auto;
+  cursor: not-allowed;
+  pointer-events: auto;
 }
 
 .siteSelectRow {
-    position: absolute;
-    bottom: 100px;
+  position: absolute;
+  bottom: 40px;
 
-    .siteSelectElt {
-        width: 182px;
+  .siteSelectElt {
+    width: 182px;
 
-        ul{
-            top: 0;
-        }
-        
-        input{
-            background: var(--soft-white);
-        }
-
-        label{
-            background: var(--soft-white);
-        }
+    ul {
+      top: 0;
     }
+
+    input {
+      background: var(--soft-white);
+    }
+
+    label {
+      background: var(--soft-white);
+    }
+  }
 }
 
-
-
 @media screen and(max-width: 800px) {
-    .navContainerFluid {
-        transform: translateX(-230px);
-        z-index: 2;
-        background: var(--main-white);
-        overflow-x: hidden;
+  .navContainerFluid {
+    transform: translateX(-230px);
+    z-index: 2;
+    background: var(--main-white);
+    overflow-x: hidden;
+    display: inline-block;
+    justify-content: unset;
 
-        .navButtonToogle {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
+    .navButtonToogle {
+      opacity: 1;
+      pointer-events: auto;
     }
+  }
 
-    .backBlack {
-        width: 100vw;
-        height: 100vh;
-        background: #000;
-        opacity: .2;
-        z-index: 1;
-        position: absolute;
-        top: 0;
-    }
+  .navigationPositioning {
+    box-shadow: unset !important;
+    border-radius: unset !important;
+    padding: 24px !important;
+  }
+  
+  .siteSelectElt {
+    width: 182px !important;
+  }
+
+  .backBlack {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    opacity: 0.2;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+  }
 }

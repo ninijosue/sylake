@@ -7,7 +7,7 @@
     overflow-x: hidden;
     background: var(--white-color);
     border-radius: 10px;
-    box-shadow: var(--small-shadow);
+    box-shadow: 0 5px 21px 0 #00000017;
     transition: .3s ease;
 
     .apprelative {
@@ -22,12 +22,6 @@
 @media screen and(max-width: 800px){
     .appContainer{
         width: calc(100vw - 31px);
-
-        // .apprelative{
-        //     display: flex;
-        //     flex-direction: column;
-        //     align-items: center;
-        // }
     }
 }
 

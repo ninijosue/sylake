@@ -132,7 +132,7 @@ class OperatingAccount extends Component {
                     {report ? report.map(rep => <td>{rep.grossProfit ? rep.grossProfit.toLocaleString() : ""}</td>) : ""}
                     {/* <td>$100</td> */}
                   </tr>
-                  <tr className={`${styles.spanedRow} ${styles.creditRowTitle}`}>
+                  <tr className={`${styles.spanedRow} `}>
                     <td rowspan={(expenseCategories.length + 1).toString()}>
                       <span>expense</span>
                       <h3 className={`${styles.expensesTitle}`}>expense</h3>
