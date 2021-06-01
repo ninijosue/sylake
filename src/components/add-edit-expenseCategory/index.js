@@ -35,6 +35,8 @@ export default class AddEditExpenseCategory extends Component {
     }
 
     async formSubmition(formData) {
+        const onLine = window.navigator.onLine;
+        if (!onLine) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const site = this.props.site;
         if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const categoryName = formData.categoryName;
