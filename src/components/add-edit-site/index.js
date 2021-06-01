@@ -34,6 +34,8 @@ export default class AddEditSite extends Component {
     }
 
     async formSubmition(formData) {
+        const online = window.navigator.onLine;
+        if(!online) return Toast.create("There is no internet connection. Please check!", {errorMessage: true});
         const siteName = formData.siteName;
         if(!siteName || siteName == "") return;
         const data = {

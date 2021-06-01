@@ -7,7 +7,7 @@ $baseline: 4px;
 	bottom: 20px;
 	right: 50px;
 	pointer-events: none;
-	z-index: 104;
+	z-index: 999 !important;
 }
 
 .toast {
