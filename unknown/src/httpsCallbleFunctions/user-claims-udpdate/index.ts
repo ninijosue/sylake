@@ -4,7 +4,7 @@ import { UserRes } from "../add-user";
 async function onSetClaims (data: any , context: any): Promise<UserRes>{
     try {
         if(!data) throw new Error("userCreationFailled");
-        const claimsData = {...data};
+        const claimsData = data;
         delete claimsData.uid;
        await fireApp.auth().setCustomUserClaims(data.uid, claimsData);
         return{

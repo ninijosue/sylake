@@ -5,46 +5,54 @@ import { getRandomString } from "../../helper/utils";
 export default class UsersModel {
 
     static async createAccount(data) {
-        // if (!data) return;
-        // delete data.confirmedPassword;   
-        // const email = data.email;
-        // const password = data.password;
-        // if (!email | email == "" | !password | password == "") return {
-        //     status: 500,
-        //     message: "Account creation failled"
-        // }
-        // try {
+        if (!data) return;
+        delete data.confirmedPassword;
+        const email = data.email;
+        const password = data.password;
+        if (!email | email == "" | !password | password == "") return {
+            status: 500,
+            message: "Account creation failled"
+        }
+        try {
+            console.log("in");
 
-        //     const userCreadentials = await AppDB.auth().createUserWithEmailAndPassword(email, password);
-        //     if (userCreadentials) {
-        //         const uid = userCreadentials.user.uid;
-        //         const dataForFire = {
-        //             ...data,
-        //             allowed: true,
-        //             isOwner: true,
-        //             users: [],
-        //             moneyDescription: data.moneyDescription
-        //         };
-        //         delete dataForFire.password;
-        //         await AppFirestore.collection("owner").doc(`${uid}`).set(dataForFire);
-        //         await this.login(data);
+            const userCreadentials = await AppDB.auth().createUserWithEmailAndPassword(email, password);
+            
+            if (!userCreadentials) throw new Error("User creation failled.");
+            const uid =  userCreadentials.user.uid;
+            
+            const claimsData = {
+                isOwner: true,
+                uid
+            }
 
-        //     }
-        //     else throw Error("userCreadentials is undefined")
+            const httpsCallableForUserClaims = AppDB.functions().httpsCallable("setClaims");
+            const claimsRes = (await httpsCallableForUserClaims(claimsData)).data;
+            console.log(claimsRes, claimsData);
+            if (claimsRes.status !== 200) throw new Error(claimsRes.message);
+            const dataForFire = {
+                ...data,
+                allowed: true,
+                isOwner: true,
+                users: [],
+                moneyDescription: data.moneyDescription
+            };
+            delete dataForFire.password;
+            await AppFirestore.collection("owner").doc(`${uid}`).set(dataForFire);
 
-        //     return {
-        //         status: 200,
-        //         message: "Account created successfully"
-        //     }
+            return {
+                status: 200,
+                message: "Account created successfully"
+            }
 
-        // } catch (error) {
-        //     console.error(error);
-        //     return {
-        //         status: 500,
-        //         message: "Account creation failled. Please try to use an other email and try again."
-        //     }
-        //     t
-        // }
+        } catch (error) {
+            console.error(error);
+            return {
+                status: 500,
+                message: "Account creation failled. Please try to use an other email and try again."
+            }
+            t
+        }
 
 
     }
@@ -117,7 +125,7 @@ export default class UsersModel {
             const docData = { ...doc.data(), ref: doc.ref };
             return docData;
         } catch (error) {
-            Toast.create("User not found!", {errorMessage: true})
+            Toast.create("User not found!", { errorMessage: true })
             return undefined
         }
     }

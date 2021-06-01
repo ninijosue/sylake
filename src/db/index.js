@@ -16,7 +16,7 @@ const firebaseConfig = {
   measurementId: "G-ZQN45JCE4X"
 };
 
-const PRODUCTION = false;
+const PRODUCTION = true;
 
 const AppDB = firebase.initializeApp(firebaseConfig);
 
