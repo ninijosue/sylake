@@ -1,11 +1,9 @@
-import { h, Component } from 'preact';
-import { AppBar, Box, Tab, Tabs, Typography } from '@material-ui/core';
-import TabPanel from '../../components/tab-panel/index';
+import { AppBar, Tabs } from '@material-ui/core';
+import {h, Component} from 'preact';
+import TabPanel from '../tab-panel';
 import styles from "./style.scss";
-import UnpaidCredits from './components/unpaid-credits';
-import PaidCredits from './components/paid-credits';
 
-export default class LoansList extends Component {
+export default class CreditMiddleware extends Component{
     constructor() {
         super();
         this.state = {
@@ -16,7 +14,7 @@ export default class LoansList extends Component {
 
     a11yProps(index) {
         return {
-            id: `simple-tab-${index}`,
+            id: `simple-_--tab-${index}`,
             'aria-controls': `simple-tabpanel-${index}`,
         };
     }
@@ -37,10 +35,10 @@ export default class LoansList extends Component {
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0}>
-                    <UnpaidCredits site={this.props.site} user={this.props.user} isLoading={status => this.props.isLoading(status)} />
+                    Unpaid credits
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <PaidCredits site={this.props.site} user={this.props.user} isLoading={status => this.props.isLoading(status)} />
+                    Paid credits
                 </TabPanel>
             </div>
         )

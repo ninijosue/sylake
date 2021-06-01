@@ -1,0 +1,16 @@
+@import "../../../../style/depedente-styles/table.scss";
+@import "../../../../style/depedente-styles/tableBtns.scss";
+@import "../../../customer-loan-detail/style.scss";
+.payBtnInLoanList{
+    position: inherit;
+    font-size: 12px;
+    svg{
+        width: 12px;
+        height: 12px;
+        padding: auto;
+    }
+}
+
+.tableUnderTabs{
+    min-height: calc(100vh - 258px) !important;
+}

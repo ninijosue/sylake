@@ -136,7 +136,7 @@ export default class App extends Component {
 				<FullScreenLoading visible={this.state.isLoading} />
 
 				<Header site={(this.state.site)} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} user={this.state.user} />
-				<NavBar currentRoute={(currentRoute)} selectedSite={site => this.setState({ site })} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} goTo={dest => this.goTo(dest)} user={this.state.user} isLoading={status => this.isLoading(status)} />
+				<NavBar currentRoute={(this.state.urrentRoute)} selectedSite={site => this.setState({ site })} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} goTo={dest => this.goTo(dest)} user={this.state.user} isLoading={status => this.isLoading(status)} />
 				<AppContainer>
 					<Router onChange={this.handleRoute}>
 						{/* <Dashboard site={(this.state.site)} default user={this.state.user} isLoading={status => this.isLoading(status)} path="/" /> */}

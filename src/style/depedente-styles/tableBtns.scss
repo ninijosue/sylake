@@ -2,7 +2,6 @@
     position: absolute;
     display: inline-flex;
     justify-content: space-between;
-    margin-top: 45px;
     right: 25px;
 
     .btnSpacing {
@@ -48,10 +47,11 @@
 
 .headerBtns {
     width: 100%;
-    display: grid;
-    height: 94px;
+    display: flex;
+    height: 66px;
     position: absolute;
     justify-content: center;
+    align-items: center;
 }
 
 @media screen and(max-width: 800px){
