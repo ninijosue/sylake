@@ -1,5 +1,4 @@
 import { h, Component } from "preact";
-import { menuIcon } from "../../assets/icons/icons";
 import NotificationConents from "../notification-contents";
 import UserInfo from "../user-info";
 import styles from "./style.scss";
@@ -101,7 +100,9 @@ export default class Header extends Component {
         return (
             <div className={styles.appHeader}>
                 <div className={styles.leftSideHeader}>
-                    <button onClick={_ => this.toogleNav(props.showNav)} type="button" className={styles.navButtonToogle} >{menuIcon}</button>
+                    <button onClick={_ => this.toogleNav(props.showNav)} type="button" className={styles.navButtonToogle} >
+                    <svg  height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>;
+                    </button>
                 </div>
 
                 <div className={styles.rightSideHeader}>

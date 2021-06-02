@@ -9,7 +9,8 @@
     "dev": "preact watch",
     "lint": "eslint src",
     "test": "jest",
-    "emulators": "firebase emulators:start"
+    "emulators": "firebase emulators:start",
+    "build-no-prebuild": "preact build --no-prerender"
   },
   "eslintConfig": {
     "extends": "preact",
@@ -33,6 +34,7 @@
     "@material-ui/core": "^4.11.4",
     "chart.js": "^3.3.2",
     "firebase": "^8.6.3",
+    "lit-html": "^1.4.1",
     "preact": "^10.3.2",
     "preact-render-to-string": "^5.1.4",
     "preact-router": "^3.2.1",

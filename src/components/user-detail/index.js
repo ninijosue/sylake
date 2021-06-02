@@ -4,7 +4,6 @@ import AddOrEditUser from '../add-edit-user';
 import ListInfoDisplayer from '../list-info-displayer';
 import Loading from '../loading-C';
 import styles from "./style.scss";
-import { closeIcon } from '../../assets/icons/icons';
 import { route } from 'preact-router';
 import closePopup from '../../helper/closePopUp';
 import { allPermission } from '../../generators/routeVerifier';
@@ -75,7 +74,7 @@ export default class UserDetail extends Component {
                                 <h5>{ressource}</h5>
                                 {
                                     permissions.includes("edit user")
-                                        ? <button type="button" onClick={_ => this.removeRessource(ressource)}>{closeIcon}</button>
+                                        ? <button type="button" onClick={_ => this.removeRessource(ressource)}><svg unDismissible xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path unDismissible d="M0 0h24v24H0z" fill="none"/><path unDismissible d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
                                         : ""
                                 }
                             </div>
@@ -98,7 +97,7 @@ export default class UserDetail extends Component {
                         return (
                             <div className={styles.ressource}>
                                 <h5>{ressource}</h5>
-                                <button type="button" onClick={_ => this.removeRessource(ressource)}>{closeIcon}</button>
+                                <button type="button" onClick={_ => this.removeRessource(ressource)}><svg unDismissible xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path unDismissible d="M0 0h24v24H0z" fill="none"/><path unDismissible d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
                             </div>
                         )
                     })

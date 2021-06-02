@@ -5,13 +5,12 @@ import LoansModel from '../../../../models/loans';
 import styles from "./style";
 // import CustomerLoanDetails from '../../components/add-edit-customer-loan';
 import { route } from 'preact-router';
-import { searchIcon, verifiedIcon } from '../../../../assets/icons/icons';
 import PayLoanAMount from '../../../../components/pay-loan-mount';
 import { allPermission } from '../../../../generators/routeVerifier';
 import Toast from '../../../../components/toast';
 
 
-export default class UnpaidCredits extends Component{
+export default class UnpaidCredits extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -116,7 +115,9 @@ export default class UnpaidCredits extends Component{
                     ?
                     <td>
                         <button onClick={_ => this._pay(rowData)} className={`${styles.loanPayBtn} ${styles.payBtnInLoanList} ${isPaied ? styles.isPaied : ""}`}
-                            disabled={isPaied} type="button">{isPaied ? "Paied" : "Pay"}{isPaied ? verifiedIcon : ""}
+                            disabled={isPaied} type="button">{isPaied ? "Paied" : "Pay"}{isPaied ?
+                                <svg enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24" /></g><g><path d="M23,12l-2.44-2.79l0.34-3.69l-3.61-0.82L15.4,1.5L12,2.96L8.6,1.5L6.71,4.69L3.1,5.5L3.44,9.2L1,12l2.44,2.79l-0.34,3.7 l3.61,0.82L8.6,22.5l3.4-1.47l3.4,1.46l1.89-3.19l3.61-0.82l-0.34-3.69L23,12z M10.09,16.72l-3.8-3.81l1.48-1.48l2.32,2.33 l5.85-5.87l1.48,1.48L10.09,16.72z" /></g></svg>
+                                : ""}
                         </button>
                     </td>
                     : ""
@@ -131,7 +132,7 @@ export default class UnpaidCredits extends Component{
             <>
                 <div className={styles.headerBtns}>
                     <div className={`${styles.tableNavigivationsBtns} ${styles.categoryNavigationsBtn}`}>
-                    {
+                        {
                             permissions.includes("add loan")
                                 ? <button onClick={_ => route("/addNewLoan")}>
                                     Add credit
@@ -149,11 +150,11 @@ export default class UnpaidCredits extends Component{
                     </div>
                 </div>
                 <div className={`${styles.tableSection} ${styles.tableUnderTabs}`}>
-                <div className={styles.tableHeader}>
+                    <div className={styles.tableHeader}>
                         <div className={styles.leftSide}>
                             <div className={styles.searchInput}>
                                 <label for="searchInput">
-                                    {searchIcon}
+                                <svg  height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                                 </label>
                                 <input onInput={evt => this.setState({ searchValue: evt.target.value })} id="searchInput" type="text" placeholder="Search" />
                             </div>

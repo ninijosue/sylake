@@ -1,7 +1,6 @@
 import { h, Component, createRef } from 'preact';
 import { route } from 'preact-router';
 import { Link } from 'preact-router/match';
-import { menuIcon, moneytization, testfy, addIcon, reportIcon } from '../../assets/icons/icons';
 import { AppDB } from '../../db';
 import { allPermission } from '../../generators/routeVerifier';
 import SiteModel from '../../models/sites';
@@ -20,7 +19,7 @@ export default class NavBar extends Component {
         this.primaryId = this.user.primaryId;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const siteInput = this.sitesSelectField.current.input.current.base.querySelector("input");
         siteInput.value = this.sites.length !== 0 ? this.sites[0] : "";
         this.siteChanged(this.sites[0]);
@@ -115,7 +114,7 @@ export default class NavBar extends Component {
                         ? <li>
                             <Link activeClassName={styles.active} href="/sales">
                                 <button className={styles.navBtn}>
-                                    {moneytization}
+                                    <svg height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z" /></svg>
                                     <span></span>
                                     <a>Sales</a>
                                 </button>
@@ -155,7 +154,7 @@ export default class NavBar extends Component {
                         ? <li>
                             <Link activeClassName={styles.active} href="/addNewLoan">
                                 <button className={styles.navBtn}>
-                                    {addIcon}
+                                    <svg height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" /></svg>
                                     <span></span>
                                     <a>Add credit</a>
                                 </button>
@@ -168,7 +167,7 @@ export default class NavBar extends Component {
                         ? <li>
                             <Link activeClassName={styles.active} href="/loans">
                                 <button className={styles.navBtn}>
-                                    {testfy}
+                                    <svg height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6z" /></svg>
                                     <span></span>
                                     <a>Credits</a>
                                 </button>
@@ -216,7 +215,7 @@ export default class NavBar extends Component {
         const siteData = await SiteModel.getOneSite(this.primaryId, data);
         this.props.isLoading(false);
         this.props.selectedSite(siteData);
-        document.dispatchEvent(new CustomEvent("sitechange", {detail: {site: data}}));
+        document.dispatchEvent(new CustomEvent("sitechange", { detail: { site: data } }));
     }
 
     render(props, state) {
@@ -226,7 +225,9 @@ export default class NavBar extends Component {
             <>
                 <div onClick={_ => this.toogleNav(showNav)} className={showNav ? styles.backBlack : ""}></div>
                 <div className={`${styles.navContainerFluid} ${showNav ? styles.showNav : ""}`}>
-                    <button onClick={_ => this.toogleNav(showNav)} type="button" className={styles.navButtonToogle} >{menuIcon}</button>
+                    <button onClick={_ => this.toogleNav(showNav)} type="button" className={styles.navButtonToogle} >
+                        <svg height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none" /><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>;
+                    </button>
                     <div className={styles.navigationPositioning}>
                         <div className={styles.container}>
                             <ul className={styles.navListSection}>
@@ -235,7 +236,7 @@ export default class NavBar extends Component {
 
                                     <Link activeClassName={styles.active} href="/report">
                                         <button className={styles.navBtn}>
-                                            {reportIcon}
+                                            <svg enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><path d="M0,0h24v24H0V0z" fill="none" /><g><path d="M19.5,3.5L18,2l-1.5,1.5L15,2l-1.5,1.5L12,2l-1.5,1.5L9,2L7.5,3.5L6,2v14H3v3c0,1.66,1.34,3,3,3h12c1.66,0,3-1.34,3-3V2 L19.5,3.5z M19,19c0,0.55-0.45,1-1,1s-1-0.45-1-1v-3H8V5h11V19z" /><rect height="2" width="6" x="9" y="7" /><rect height="2" width="2" x="16" y="7" /><rect height="2" width="6" x="9" y="10" /><rect height="2" width="2" x="16" y="10" /></g></svg>
                                             <span></span>
                                             <a>Report</a>
                                         </button>
@@ -243,14 +244,14 @@ export default class NavBar extends Component {
                                 </li>
                             </ul>
                             <div className={styles.siteSelectRow}>
-                            <Select ref={this.sitesSelectField} className={styles.siteSelectElt} name="site" label="Site" onChange={data => this.siteChanged(data)}>
-                                {
-                                    this.sites.map((site) => <option value={site}>{site}</option>)
-                                }
-                            </Select>
+                                <Select ref={this.sitesSelectField} className={styles.siteSelectElt} name="site" label="Site" onChange={data => this.siteChanged(data)}>
+                                    {
+                                        this.sites.map((site) => <option value={site}>{site}</option>)
+                                    }
+                                </Select>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </>
