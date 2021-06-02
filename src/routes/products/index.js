@@ -34,7 +34,7 @@ export default class Products extends Component {
     componentDidMount() {
         const onLine = window.navigator.onLine;
         if (!onLine) Toast.create("There is no internet connection. Please check!", {errorMessage: true});
-        document.addEventListener("sitechange", evt=>console.log(evt))
+        document.addEventListener("sitechange", evt=>{})
         this._getAllProducts(this.props.site);
     }
 

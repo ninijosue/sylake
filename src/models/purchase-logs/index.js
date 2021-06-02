@@ -9,7 +9,6 @@ export default class PurchaseLogsModel {
             if (!date) throw new Error("data is not defined");
             const from = date.from;
             const to = date.to;
-            console.log(productName);
             if (productName) logsSnaps = await root.collection("stockLogs")
                 .where("productName", "==", productName)
                 .where("tx_t", ">", from)
@@ -123,7 +122,6 @@ export default class PurchaseLogsModel {
     }
 
     static async deletePurchasedProduct(data, primaryId, site) {
-        console.log(site);
         const root = AppFirestore.collection("owner").doc(`${primaryId}/sites/${site}`);
         try {
                 if (data.takenAction !== "purchased") return {
@@ -132,7 +130,6 @@ export default class PurchaseLogsModel {
                 }
 
                 const getProductInStock = await root.collection("stock").where("productName", "==", data.productName).get();
-                console.log(getProductInStock.size, data.productName);
                 if (getProductInStock.size !== 1)  throw new Error("failled");
                 const productRefInStock = getProductInStock.docs[0].ref;
                 const purchaseUnitPrice = Number((Number(data.amount) / Number(data.quantity)).toFixed(2));

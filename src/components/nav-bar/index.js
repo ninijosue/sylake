@@ -4,6 +4,7 @@ import { Link } from 'preact-router/match';
 import { menuIcon, moneytization, testfy, addIcon, reportIcon } from '../../assets/icons/icons';
 import { AppDB } from '../../db';
 import { allPermission } from '../../generators/routeVerifier';
+import SiteModel from '../../models/sites';
 import Select from '../select-C';
 import styles from "./style.scss";
 
@@ -16,11 +17,13 @@ export default class NavBar extends Component {
         this.user = props.user;
         this.sites = this.user.sites;
         this.sitesSelectField = createRef();
+        this.primaryId = this.user.primaryId;
     }
 
     componentDidMount(){
         const siteInput = this.sitesSelectField.current.input.current.base.querySelector("input");
-        siteInput.value = this.sites.length !== 0 ? this.sites[0] : ""
+        siteInput.value = this.sites.length !== 0 ? this.sites[0] : "";
+        this.siteChanged(this.sites[0]);
     }
 
     adminNavs() {
@@ -208,8 +211,11 @@ export default class NavBar extends Component {
 
     }
 
-    siteChanged(data) {
-        this.props.selectedSite(data.value.toLowerCase());
+    async siteChanged(data) {
+        this.props.isLoading(true);
+        const siteData = await SiteModel.getOneSite(this.primaryId, data);
+        this.props.isLoading(false);
+        this.props.selectedSite(siteData);
         document.dispatchEvent(new CustomEvent("sitechange", {detail: {site: data}}));
     }
 

@@ -52,7 +52,6 @@ export default class SpecificProductLogInStock extends Component {
         document.addEventListener("datechange", evt => {
             const date = evt.detail.choosenTimeRange;
             this._getAllProducts(this.props.site, date);
-            console.log(new Date(date.to).toDateString());
             this.setState({ date });
         });
     }

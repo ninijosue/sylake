@@ -70,7 +70,7 @@ export default class App extends Component {
 
 	async setUser(user) {
 		this.setState({ isLoading: true });
-		const idTokenId = await AppDB.auth().currentUser.getIdTokenResult();
+		const idTokenId = await AppDB.auth().currentUser.getIdTokenResult(true);
 		const claims = idTokenId.claims;
 		if (!claims) return;
 		let primaryId = claims.isOwner ? user.uid : claims.primaryId;
@@ -95,8 +95,6 @@ export default class App extends Component {
 				render: "mainApp",
 				isLoading: false
 			});
-
-			// console.log(userData, "user data");
 		}
 
 	}
@@ -127,16 +125,27 @@ export default class App extends Component {
 		this.setState({ rowData })
 	}
 
+	siteChanged(data){
+		const site = data.site;
+		const productsDefine = data.productsDefine;
+		const user = this.state.user;
+		this.setState({
+			site,
+			user: {...user, productsDefine}
+		})
+	}
+
 
 
 	mainApp(props) {
 		let userDocId;
+		console.log(this.state.user.productsDefine);
 		return (
 			<>
 				<FullScreenLoading visible={this.state.isLoading} />
 
-				<Header site={(this.state.site)} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} user={this.state.user} />
-				<NavBar currentRoute={(this.state.urrentRoute)} selectedSite={site => this.setState({ site })} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} goTo={dest => this.goTo(dest)} user={this.state.user} isLoading={status => this.isLoading(status)} />
+				<Header isLoading={status => this.isLoading(status)} site={(this.state.site)} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} user={this.state.user} />
+				<NavBar currentRoute={(this.state.urrentRoute)} selectedSite={data => this.siteChanged(data)} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} goTo={dest => this.goTo(dest)} user={this.state.user} isLoading={status => this.isLoading(status)} />
 				<AppContainer>
 					<Router onChange={this.handleRoute}>
 						{/* <Dashboard site={(this.state.site)} default user={this.state.user} isLoading={status => this.isLoading(status)} path="/" /> */}

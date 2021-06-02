@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import { userIcon } from '../../assets/icons/icons';
 import { AppDB } from '../../db';
+import { allPermission } from '../../generators/routeVerifier';
 import Button from '../Button';
 import styles from "./style.scss";
 
@@ -15,7 +16,7 @@ class UserInfo extends Component {
         await AppDB.auth().signOut();
     }
     render({ showInfo }, { }) {
-        const permissions = this.user.isOwner ? ["All"] : this.user.permittedRessources;
+        const permissions = this.user.isOwner ? allPermission : this.user.permittedRessources;
         return (
             <div unDismissibleProf className={`${styles.userInfoContainerFluid} ${showInfo ? styles.show : ""}`}>
                 <div unDismissibleProf className={styles.userInfoContainer}>

@@ -32,7 +32,6 @@ export default class PurchaseLogs extends Component {
         this.props.isLoading(true);
         const logs = await PurchaseLogsModel.getPurchaseLogs(primaryId, productName, site, date);
         this.props.isLoading(false);
-        console.log("fetched");
         this.setState({ logs });
     }
 

@@ -34,9 +34,7 @@ class PayLoanAMount extends Component {
         const ask = confirm(`You are about to pay the loan make sure that the amount which is (${amount}) to pay is as expected and continue.`);
         if (!ask) return;
         const paiedAmount = Number(paiedAmountbefore) + amount;
-        console.log(paiedAmount, this.props.totalLoanAmount);
         const isPaied = (paiedAmount == this.props.totalLoanAmount);
-        console.log(isPaied);
         const dataForModel = {paiedAmount, isPaied}
         this.setState({isLoading: true})
         const res = await LoansModel.addPaymentOfLoan(docRef, dataForModel, site);

@@ -14,8 +14,6 @@ export default class UsersModel {
             message: "Account creation failled"
         }
         try {
-            console.log("in");
-
             const userCreadentials = await AppDB.auth().createUserWithEmailAndPassword(email, password);
             
             if (!userCreadentials) throw new Error("User creation failled.");
@@ -28,7 +26,6 @@ export default class UsersModel {
 
             const httpsCallableForUserClaims = AppDB.functions().httpsCallable("setClaims");
             const claimsRes = (await httpsCallableForUserClaims(claimsData)).data;
-            console.log(claimsRes, claimsData);
             if (claimsRes.status !== 200) throw new Error(claimsRes.message);
             const dataForFire = {
                 ...data,

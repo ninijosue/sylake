@@ -161,7 +161,6 @@ export default class Sales extends Component {
 
     render() {
         const checkedData = Array.from(this.state.checkedData.values());
-        console.log(this.state.allSales, "----", checkedData);
         const permissions = this.user.isOwner ? allPermission : this.user.permittedRessources;
         return (
             <>

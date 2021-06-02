@@ -23,9 +23,19 @@ export default class SiteModel{
         }
     }
 
+    static async getOneSite(primaryId, siteName) {
+        const root = AppFirestore.collection("owner").doc(`${primaryId}`);
+        try {
+            const categoriesSnap = await root.collection("sites").where("siteName", '==', siteName).get();
+            return categoriesSnap.docs[0].data();
+        }
+        catch (e) {
+            return {}
+        }
+    }
+
     static async addNewSite(data, primaryId) {
         const root = AppFirestore.collection("owner").doc(`${primaryId}`);
-        console.log(data);
         try {
             if(!primaryId) throw new Error("Main ID not found!");
             await root.collection("sites").doc(`${data.siteName}`).set(data);

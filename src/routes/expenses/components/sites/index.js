@@ -60,6 +60,7 @@ export default class Sites extends Component {
         return <tr onClick={evt => this.rowClicked(evt.target.tagName, rowData)}>
             <td className={styles.inputTD}><input checked={this.state.checkedData.has(rowData.ref.id)} type="checkbox" onChange={evt => this._onCheck(evt, rowData)} /></td>
             <td>{rowData.siteName.toUpperCase()}</td>
+            <td>{rowData.productsDefine.toUpperCase()}</td>
         </tr>;
     }
 
@@ -116,6 +117,8 @@ export default class Sites extends Component {
                     </div>
                     <DataTable searchValue={(this.state.searchValue)} rowDef={this._rowDef} className={`${styles.tableContainer}`} showCheckBoxes data={allSites}>
                         <ColDef name="siteName" >Site name</ColDef>
+                        <ColDef name="productsDefine" >Products defined as</ColDef>
+
                     </DataTable>
                 </div>
             </>

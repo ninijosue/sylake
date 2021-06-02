@@ -1,10 +1,8 @@
-import * as functions from 'firebase-functions'
+import * as functions from 'firebase-functions';
 import { fireDB } from '../../db'
 export const saleOnWriteRecall = functions.firestore
   .document('owner/{ownerId}/sites/{site}/sales/{docId}')
   .onCreate(async (snap, context) => {
-    console.log("in");
-    
     const newValue = snap.data()
     const params = context.params;
     const docIdRoot: string = params.docId;
@@ -36,7 +34,6 @@ export const saleOnWriteRecall = functions.firestore
       const operatingAccountData = (await currentStockOperatingAccountRef.get()).data();
       let salesAmountOfOperatingAmount: number;
       let stockAmountOfOperatingAmount: number;
-      console.log(operatingAccountData);
 
 
       if (operatingAccountData) {

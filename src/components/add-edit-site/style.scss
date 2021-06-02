@@ -2,3 +2,15 @@
 .addOrEditCategoryBtnSubmit{
     margin-top: 28px !important;
 }
+
+.addEditRow{
+    display:  flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+@media screen and(max-width: 600px) {
+    .addEditRow{
+        display:  block !important;
+    }
+}
