@@ -139,20 +139,24 @@ export default class App extends Component {
 
 	mainApp(props) {
 		let userDocId;
-		console.log(this.state.user.productsDefine);
+		console.log("state====", this.state.site);
 		return (
 			<>
 				<FullScreenLoading visible={this.state.isLoading} />
 
 				<Header isLoading={status => this.isLoading(status)} site={(this.state.site)} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} user={this.state.user} />
-				<NavBar currentRoute={(this.state.urrentRoute)} selectedSite={data => this.siteChanged(data)} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} goTo={dest => this.goTo(dest)} user={this.state.user} isLoading={status => this.isLoading(status)} />
+				<NavBar currentRoute={(this.state.currentRoute)} selectedSite={data => {
+					if(Object.keys(data).length === 0) return;
+					this.siteChanged(data);
+					console.log("global", data);
+				}} showNavInReturn={value => this.setState({ showNav: value })} showNav={(this.state.showNav)} goTo={dest => this.goTo(dest)} user={this.state.user} isLoading={status => this.isLoading(status)} />
 				<AppContainer>
 					<Router onChange={this.handleRoute}>
 						{/* <Dashboard site={(this.state.site)} default user={this.state.user} isLoading={status => this.isLoading(status)} path="/" /> */}
 						<Stock site={(this.state.site)} user={this.state.user} isLoading={status => this.isLoading(status)} path="/stock" />
 						<Sales site={(this.state.site)} user={this.state.user} isLoading={status => this.isLoading(status)} path="/sales" />
 						<Expense site={(this.state.site)} user={this.state.user} isLoading={status => this.isLoading(status)} path="/more" />
-						<Products site={(this.state.site)} user={this.state.user} isLoading={status => this.isLoading(status)} path="/products" />
+						<Products site={this.state.site} user={this.state.user} isLoading={status => this.isLoading(status)} path="/products" />
 						<Users site={(this.state.site)} rowData={data => this.setRowData(data)} user={this.state.user} isLoading={status => this.isLoading(status)} path="/users" />
 						<AllSoldProductsDoneByUser site={(this.state.site)} user={this.state.user} isLoading={status => this.isLoading(status)} path="/allProductSoldByUser" />
 						<AddNewSale default site={(this.state.site)} user={this.state.user} isLoading={status => this.isLoading(status)} path="/addNewSale" />

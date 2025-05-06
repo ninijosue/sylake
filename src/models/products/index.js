@@ -90,12 +90,14 @@ export default class ProductModel {
     }
 
     static async getAllProductsOfMine(primaryId, siteName) {
+        console.log("here we are", primaryId);
+        console.log("siteName", siteName);
         if (!primaryId) return;
         const root = AppFirestore.collection("owner").doc(`${primaryId}/sites/${siteName}`);
         try {
 
             const productsToSaleDoc = await root.collection("products").get();
-
+            console.log("productsToSaleDoc", productsToSaleDoc.size);
             const productsToSale = [];
             productsToSaleDoc.docs.forEach(doc => {
                 const product = {
@@ -107,7 +109,7 @@ export default class ProductModel {
             return productsToSale;
         }
         catch (e) {
-
+            console.error(e);
             return [];
         }
     }

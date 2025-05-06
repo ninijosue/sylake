@@ -1,4 +1,4 @@
-@import "../../style/depedente-styles/form.scss";
+@use "../../style/depedente-styles/form.scss" as *;
 .addOrEditCategoryBtnSubmit{
     margin-top: 28px !important;
 }
@@ -9,7 +9,7 @@
     flex-wrap: wrap;
 }
 
-@media screen and(max-width: 600px) {
+@media screen and (max-width: 600px) {
     .addEditRow{
         display:  block !important;
     }

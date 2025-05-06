@@ -1,5 +1,5 @@
-@import "../../style/depedente-styles/table.scss";
-@import "../../style/depedente-styles/tableBtns.scss";
+@use "../../style/depedente-styles/table.scss" as *;
+@use "../../style/depedente-styles/tableBtns.scss" as *;
 
 .dataNotEditable{
     cursor: not-allowed !important;

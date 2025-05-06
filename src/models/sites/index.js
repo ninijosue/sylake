@@ -25,11 +25,21 @@ export default class SiteModel{
 
     static async getOneSite(primaryId, siteName) {
         const root = AppFirestore.collection("owner").doc(`${primaryId}`);
+        console.log("siteName", siteName);
         try {
             const categoriesSnap = await root.collection("sites").where("siteName", '==', siteName).get();
-            return categoriesSnap.docs[0].data();
+
+            if (categoriesSnap.empty) 
+                return {}
+            const details = categoriesSnap.docs[0]?.data();
+            const site = {
+                ...details,
+                ref: categoriesSnap.docs[0].ref,
+            };
+            return site ;
         }
         catch (e) {
+            console.error(e);
             return {}
         }
     }

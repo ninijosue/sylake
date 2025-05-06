@@ -211,11 +211,12 @@ export default class NavBar extends Component {
     }
 
     async siteChanged(data) {
+        const value = typeof data === "string" ? data : data.value;
         this.props.isLoading(true);
-        const siteData = await SiteModel.getOneSite(this.primaryId, data);
+        const {...siteDetails} = await SiteModel.getOneSite(this.primaryId, value);
         this.props.isLoading(false);
-        this.props.selectedSite(siteData);
-        document.dispatchEvent(new CustomEvent("sitechange", { detail: { site: data } }));
+        this.props.selectedSite(siteDetails);
+        document.dispatchEvent(new CustomEvent("sitechange", { detail: { site: value } }));
     }
 
     render(props, state) {

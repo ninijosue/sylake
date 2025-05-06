@@ -1,4 +1,4 @@
-@import "../../style/depedente-styles/form.scss";
+@use "../../style/depedente-styles/form.scss" as *;
 .loanCustomerFillOutInfo{
     box-shadow: var(--small-shadow);
     padding: 21px;

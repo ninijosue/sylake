@@ -1,4 +1,4 @@
-@import '../unpaid-credits/style.scss';
+@use '../unpaid-credits/style.scss' as *;
 
 .paidCreditTable{
     transform: translateY(40px) !important;

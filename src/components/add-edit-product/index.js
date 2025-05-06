@@ -53,8 +53,8 @@ export default class AddOrEditProduct extends Component {
         const onLine = window.navigator.onLine;
         if (!onLine) return Toast.create("There is no internet connection. Please check!", { errorMessage: true });
         const site = this.props.site;
-        const isInUserSites = this.sites.includes(site);
-        if (!site || !isInUserSites) return Toast.create("There is no site seclected. Please check!", { errorMessage: true });
+        const isInUserSites = this.sites.map(s=>s.trim()).includes(site);
+        if (!site || !isInUserSites) return Toast.create("There is no site selected. Please check!", { errorMessage: true });
         let productRole = data.productRole;
         if (!productRole) productRole = "both";
         const rowData = this.props.rowData;

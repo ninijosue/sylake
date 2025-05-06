@@ -22,6 +22,7 @@ export default class Products extends Component {
     }
 
     async _getAllProducts(siteName) {
+        console.log("here we are");
         const didIncludeInUserSites = this.sites.includes(siteName);
         if(!siteName || !didIncludeInUserSites) return;
         this.props.isLoading(true);
@@ -77,7 +78,7 @@ export default class Products extends Component {
 
     _addNewProduct() {
         const site = this.props.site;
-        const isInUserSites = this.sites.includes(site);
+        const isInUserSites = this.sites.map(s=>s.trim()).includes(site);
         if(!site || !isInUserSites) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         popup(<AddOrEditProduct site={site} user={this.user} refleshData={_ => this.refleshData()} />);
     }
@@ -115,6 +116,7 @@ export default class Products extends Component {
         const checkedData = Array.from(this.state.checkedData.values());
         const moneyDiscription = this.user.moneyDiscription;
         const permissions = this.user.isOwner ? allPermission : this.user.permittedRessources;
+        console.log("sites", this.props.site);
         return (
             <>
                 <div className={styles.tableTitle}>

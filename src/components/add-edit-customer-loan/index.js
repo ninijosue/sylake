@@ -43,6 +43,7 @@ export default class CustomerLoanDetails extends Component {
 
     async formSubmition(formData) {
         const site = this.props.site;
+        console.log("formData", site);
         if(!site) return Toast.create("There is no site selected. Please check!", {errorMessage: true});
         const data = {
             ...formData,

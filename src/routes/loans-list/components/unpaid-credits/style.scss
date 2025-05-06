@@ -1,6 +1,6 @@
-@import "../../../../style/depedente-styles/table.scss";
-@import "../../../../style/depedente-styles/tableBtns.scss";
-@import "../../../customer-loan-detail/style.scss";
+@use "../../../../style/depedente-styles/table.scss" as *;
+@use "../../../../style/depedente-styles/tableBtns.scss" as *;
+@use "../../../customer-loan-detail/style.scss" as *;
 .payBtnInLoanList{
     position: inherit;
     font-size: 12px;

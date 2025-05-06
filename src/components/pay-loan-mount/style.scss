@@ -1,4 +1,4 @@
-@import "../../style/depedente-styles/form.scss";
+@use "../../style/depedente-styles/form.scss" as *;
 .amountInput{
     margin: 27px 0 !important;
 }

@@ -78,21 +78,21 @@
     pointer-events: auto;
 }
 
-@media screen and(max-width:600px) {
+@media screen and (max-width:600px) {
     .notificationContentsContainerCover {
         top: 36px;
         right: -150px;
     }
 }
 
-@media screen and(max-width:800px) {
+@media screen and (max-width:800px) {
     .notificationContentsContainerCover button {
         opacity: 1 !important;
         pointer-events: auto;
     }
 }
 
-@media screen and(max-width: 600px) {
+@media screen and (max-width: 600px) {
     .notificationContentsContainerCover {
         top: 36px;
         right: -150px;

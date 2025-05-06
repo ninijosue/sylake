@@ -1,4 +1,4 @@
-@import "../addNewSale/style.scss";
+@use "../addNewSale/style.scss" as *;
 
 .siteSelectionField{
     width: 140px;
